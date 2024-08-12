@@ -1,0 +1,3498 @@
+ Code for the original camera rig:
+
+<!-- Basic movement and teleportation  -->
+<!-- Camera Rig with WASD controls disabled -->
+<!--<a-entity id="cameraRig" position="3 3 0" rotation="0 0 0">
+ 
+ 
+    
+    <a-entity id="cursor" cursor="rayOrigin: object" raycaster="objects: .clickable; far: 20" position="0 0 -2" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: white; shader: flat" visible-ray cursor-toggle-vr></a-entity>
+  </a-entity>
+  
+  
+  <a-entity oculus-touch-controls="hand: left" hand-tracking-controls="hand: left" laser-controls="hand: left" raycaster="objects: .clickable; far: 30" line="color: red; opacity: 0.75"></a-entity>
+  
+ 
+  <a-entity oculus-touch-controls="hand: right" hand-tracking-controls="hand: right" laser-controls="hand: right" raycaster="objects: .clickable; far: 30" line="color: red; opacity: 0.75"></a-entity>
+</a-entity>-->
+
+Controls Panel HTML code:
+
+<!--Controls Panel-->
+<!--<a-entity id="controlsPanel"position="-4 2 5" custom-look-at="target: #head" >
+  <a-plane id="basePlane" color="#4D5061" width="5" height="5">
+    <a-plane id="huskyButton" class="clickable" position="-0.8 2 0.1" height="0.5" hover-color="color: #63666A">
+      <a-text value="Husky" alight="right" color="black" position="-0.3 0 0"></a-text>
+    </a-plane>
+    <a-plane id="gen3Button" class="clickable" position="0.8 2 0.1" height="0.5" hover-color="color: #63666A">
+      <a-text value="Gen3 Arm" anchor="left" color="black" position="-0.5 0 0"></a-text>
+    </a-plane>
+    <a-plane id="resetButton" position="-2 2 0.1" class="clickable" height="0.2" width="0.75"  hover-color="color: #63666A">
+      <a-text position = "-0.35 0 0.01"value="RESET" color="black" width="4"></a-text>
+    </a-plane>
+    <a-plane id="userToggle" position="2 2 0.1" class="clickable" height="0.2" width="0.75"  hover-color="color: #63666A">
+      <a-text id="userToggleText" position = "-0.35 0 0.01"value="Single User" color="black" width="3"></a-text>
+    </a-plane>
+    <a-plane id="measureToggle" position="2 1.8 0.1" class="clickable" height="0.2" width="0.75"  hover-color="color: #63666A">
+      <a-text id="measureToggleText" position = "-0.35 0 0.01"value="Radians" color="black" width="3"></a-text>
+    </a-plane>
+
+    <a-plane id="frontRightWheelJointPanel" position="-1.1 1.3 0.1" height="0.5" width="1.25">
+      <a-text id="FRWtitle" value="Front Right Wheel" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="FRWvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5" multiuser="true"></a-text>
+      <a-plane id="FRWdecreaseButton"  height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text id="FRWminus"  value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="FRWincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text id="FRWplus" value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane>
+
+    <a-plane id="frontLeftWheelJointPanel" position="-1.1 0.7 0.1" height="0.5" width="1.25">
+      <a-text value="Front Left Wheel" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="FLWvalue" multiuser="true" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="FLWdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text id="FLWminus" value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="FLWincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text id="FLWplus" value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane>
+
+    <a-plane id="backRightWheelJointPanel" position="-1.1 0.1 0.1" height="0.5" width="1.25">
+      <a-text value="Back Right Wheel" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="BRWvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="BRWdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="BRWincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane>
+    
+    <a-plane id="backLeftWheelJointPanel" position="-1.1 -0.5 0.1" height="0.5" width="1.25">
+      <a-text value="Back Left Wheel" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="BLWvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="BLWdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="BLWincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane>
+
+    <a-plane id="JJoint1Panel" position="-1.1 -1.1 0.1"  height="0.5" width="1.25" >
+      <a-text id="JJP1Title" value="Arm Base Rotation" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJ1value" multiuser="true" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJ1decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text id="JJP1minus" value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJ1increaseButton"  height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text id="JJP1plus" value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+    
+    <a-plane id="JJoint2Panel" position="-1.1 -1.7 0.1" height="0.5" width="1.25">
+      <a-text value="Arm Hinge Joint" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJ2value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJ2decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJ2increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJoint3Panel" position="0.3 1.3 0.1" height="0.5" width="1.25">
+      <a-text value="Arm Extension Hinge" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJ3value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJ3decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJ3increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJoint4Panel" position="0.3 0.7 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Base Rotation" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJ4value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJ4decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJ4increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJoint5Panel" position="0.3 0.1 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Hinge Joint" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJ5value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJ5decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJ5increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJoint6Panel" position="0.3 -0.5 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Rotation" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJ6value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJ6decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJ6increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJFJoint1Panel" position="0.3 -1.1 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Finger 1" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJF1value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJF1decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJF1increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJFJoint2Panel" position="0.3 -1.7 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Finger 2" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJF2value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJF2decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJF2increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJFJoint3Panel" position="1.7 1.3 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Finger 3" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJF3value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJF3decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJF3increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJFTJoint1Panel" position="1.7 0.7 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Finger Tip 1" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJFT1value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJFT1decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJFT1increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJFTJoint2Panel" position="1.7 0.1 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Finger Tip 2" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJFT2value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJFT2decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJFT2increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JJFTJoint3Panel" position="1.7 -0.5 0.1" height="0.5" width="1.25">
+      <a-text value="Claw Finger Tip 3" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JJFT3value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JJFT3decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JJFT3increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="HHPanel" position="1.7 -1.1 0.09" height="0.5" width="1.25">
+      <a-text value="Vertical Height" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="HHvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="HHdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="HHincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="Joint1Panel" position="-1.1 1.3 0.09" height="0.5" width="1.25">
+      <a-text value="Arm Base Rotation" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="J1value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="J1decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="J1increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="Joint2Panel" position="-1.1 0.7 0.09" height="0.5" width="1.25">
+      <a-text value="Arm Hinge Joint" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="J2value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="J2decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="J2increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="Joint3Panel" position="-1.1 0.1 0.09" height="0.5" width="1.25">
+      <a-text value="Arm Elbow Joint" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="J3value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="J3decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="J3increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="Joint4Panel" position="-1.1 -0.5 0.09" height="0.5" width="1.25">
+      <a-text value="Claw Hinge Rotation" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="J4value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="J4decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="J4increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="Joint5Panel" position="-1.1 -1.1 0.09" height="0.5" width="1.25">
+      <a-text value="Arm Hinge Joint" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="J5value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="J5decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="J5increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+    
+    <a-plane id="Joint6Panel" position="-1.1 -1.7 0.09" height="0.5" width="1.25">
+      <a-text value="Claw Bsse Rotation" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="J6value" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="J6decreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="J6increaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JointFPanel" position="0.3 1.3 0.09" height="0.5" width="1.25">
+      <a-text value="Finger Joint (All 4 below)" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JFvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JFdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JFincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+    
+    <a-plane id="JointLIKPanel" position="0.3 0.7 0.09" height="0.5" width="1.25">
+      <a-text value="Left Inner Knuckle" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JLIKvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JLIKdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JLIKincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JointLIFPanel" position="0.3 0.1 0.09" height="0.5" width="1.25">
+      <a-text value="Left Inner Finger" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JLIFvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JLIFdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JLIFincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JointRIKPanel" position="0.3 -0.5 0.09" height="0.5" width="1.25">
+      <a-text value="Right Inner Knuckle" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JRIKvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JRIKdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JRIKincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="JointRIFPanel" position="0.3 -1.1 0.09" height="0.5" width="1.25">
+      <a-text value="Right Inner Finger" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="JRIFvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="JRIFdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A" >
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="JRIFincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+
+    <a-plane id="G3HPanel" position="0.3 -1.7 0.09" height="0.5" width="1.25">
+      <a-text value="Vertical Height" anchor="left" color="black" position="-0.35 0.1 0" width="2"></a-text>
+      <a-text id="G3Hvalue" value="0.0" anchor="center" color="black" position="0.7 -0.05 0" width="1.5"></a-text>
+      <a-plane id="G3HdecreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="-0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="-" position="-0.05 0 0"></a-text>
+      </a-plane>
+      <a-plane id="G3HincreaseButton" height="0.5" width="0.2" color="#A2BCE0" position="0.55 0 0.01" class="clickable" hover-color="color: #63666A">
+        <a-text value="+" position="-0.075 0 0"></a-text>
+      </a-plane>
+    </a-plane> 
+    
+   
+    
+  </a-plane>
+  
+
+</a-entity>-->
+
+
+Old Croquet Joining Code
+ //Croquet.startSession(this.data.sessionName, RootModel, RootView);
+        //Croquet.startSession(this.data.sessionName, RootModel, RootView, { step: "manual" })
+        //let sessionName = this.data.sessionName == 'demo' ? Croquet.App.autoSession() : this.data.sessionName;
+        //let password = this.data.password == 'demo' ? Croquet.App.autoPassword() : this.data.password;
+        //let apiKey = this.data.apiKey == 'myApiKey' ? '1MAgJydFdvcKpGkHe7bhxLmr3Hj4mofPKvC06mpII' : this.data.apiKey;
+
+
+Control Panel Button Code:
+
+ //husky publishes
+            /*document.getElementById("FRWincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("FRWIncrease", "mousedown");
+            });
+            document.getElementById("FRWincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("FRWIncrease", "mouseup");
+            });
+            
+        
+            document.getElementById("FRWdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("FRWDecrease", "mousedown");
+            });
+            document.getElementById("FRWdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("FRWDecrease", "mouseup");
+            });
+        
+            document.getElementById("FLWincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("FLWIncrease", "mousedown");
+            });
+            document.getElementById("FLWincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("FLWIncrease", "mouseup");
+            });
+        
+            document.getElementById("FLWdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("FLWDecrease", "mousedown");
+            });
+            document.getElementById("FLWdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("FLWDecrease", "mouseup");
+            });
+        
+            document.getElementById("BRWincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("BRWIncrease", "mousedown");
+            });
+            document.getElementById("BRWincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("BRWIncrease", "mouseup");
+            });
+        
+            document.getElementById("BRWdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("BRWDecrease", "mousedown");
+            });
+            document.getElementById("BRWdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("BRWDecrease", "mouseup");
+            });
+        
+            document.getElementById("BLWincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("BLWIncrease", "mousedown");
+            });
+            document.getElementById("BLWincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("BLWIncrease", "mouseup");
+            });
+        
+            document.getElementById("BLWdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("BLWDecrease", "mousedown");
+            });
+            document.getElementById("BLWdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("BLWDecrease", "mouseup");
+            });
+        
+            document.getElementById("JJ1increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ1Increase", "mousedown");
+            });
+            document.getElementById("JJ1increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ1Increase", "mouseup");
+            });
+        
+            document.getElementById("JJ1decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ1Decrease", "mousedown");
+            });
+            document.getElementById("JJ1decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ1Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJ2increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ2Increase", "mousedown");
+            });
+            document.getElementById("JJ2increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ2Increase", "mouseup");
+            });
+        
+            document.getElementById("JJ2decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ2Decrease", "mousedown");
+            });
+            document.getElementById("JJ2decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ2Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJ3increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ3Increase", "mousedown");
+            });
+            document.getElementById("JJ3increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ3Increase", "mouseup");
+            });
+        
+            document.getElementById("JJ3decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ3Decrease", "mousedown");
+            });
+            document.getElementById("JJ3decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ3Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJ4increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ4Increase", "mousedown");
+            });
+            document.getElementById("JJ4increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ4Increase", "mouseup");
+            });
+        
+            document.getElementById("JJ4decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ4Decrease", "mousedown");
+            });
+            document.getElementById("JJ4decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ4Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJ5increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ5Increase", "mousedown");
+            });
+            document.getElementById("JJ5increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ5Increase", "mouseup");
+            });
+        
+            document.getElementById("JJ5decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ5Decrease", "mousedown");
+            });
+            document.getElementById("JJ5decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ5Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJ6increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ6Increase", "mousedown");
+            });
+            document.getElementById("JJ6increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ6Increase", "mouseup");
+            });
+        
+            document.getElementById("JJ6decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJ6Decrease", "mousedown");
+            });
+            document.getElementById("JJ6decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJ6Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJF1increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJF1Increase", "mousedown");
+            });
+            document.getElementById("JJF1increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJF1Increase", "mouseup");
+            });
+        
+            document.getElementById("JJF1decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJF1Decrease", "mousedown");
+            });
+            document.getElementById("JJF1decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJF1Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJF2increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJF2Increase", "mousedown");
+            });
+            document.getElementById("JJF2increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJF2Increase", "mouseup");
+            });
+        
+            document.getElementById("JJF2decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJF2Decrease", "mousedown");
+            });
+            document.getElementById("JJF2decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJF2Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJF3increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJF3Increase", "mousedown");
+            });
+            document.getElementById("JJF3increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJF3Increase", "mouseup");
+            });
+        
+            document.getElementById("JJF3decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJF3Decrease", "mousedown");
+            });
+            document.getElementById("JJF3decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJF3Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJFT1increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJFT1Increase", "mousedown");
+            });
+            document.getElementById("JJFT1increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJFT1Increase", "mouseup");
+            });
+        
+            document.getElementById("JJFT1decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJFT1Decrease", "mousedown");
+            });
+            document.getElementById("JJFT1decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJFT1Decrease", "mouseup");
+            });
+            
+            document.getElementById("JJFT2increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJFT2Increase", "mousedown");
+            });
+            document.getElementById("JJFT2increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJFT2Increase", "mouseup");
+            });
+        
+            document.getElementById("JJFT2decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJFT2Decrease", "mousedown");
+            });
+            document.getElementById("JJFT2decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJFT2Decrease", "mouseup");
+            });
+        
+            document.getElementById("JJFT3increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJFT3Increase", "mousedown");
+            });
+            document.getElementById("JJFT3increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJFT3Increase", "mouseup");
+            });
+        
+            document.getElementById("JJFT3decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JJFT3Decrease", "mousedown");
+            });
+            document.getElementById("JJFT3decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JJFT3Decrease", "mouseup");
+            });
+        
+            document.getElementById("HHincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("HHIncrease", "mousedown");
+            });
+            document.getElementById("HHincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("HHIncrease", "mouseup");
+            });
+        
+            document.getElementById("HHdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("HHDecrease", "mousedown");
+            });
+            document.getElementById("HHdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("HHDecrease", "mouseup");
+            });
+        
+            //robot switching button publish
+            document.getElementById("gen3Button").addEventListener("click", ()=> {
+              this.publish("gen3Button", "click");
+            })
+        
+            document.getElementById("huskyButton").addEventListener("click", () => {
+              this.publish("huskyButton", "click");
+            });
+        
+            //gen3 publishes
+            document.getElementById("J1increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J1Increase", "mousedown");
+            });
+            document.getElementById("J1increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J1Increase", "mouseup");
+            });
+        
+            document.getElementById("J1decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J1Decrease", "mousedown");
+            });
+            document.getElementById("J1decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J1Decrease", "mouseup");
+            });
+        
+            document.getElementById("J2increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J2Increase", "mousedown");
+            });
+            document.getElementById("J2increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J2Increase", "mouseup");
+            });
+        
+            document.getElementById("J2decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J2Decrease", "mousedown");
+            });
+            document.getElementById("J2decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J2Decrease", "mouseup");
+            });
+        
+            document.getElementById("J3increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J3Increase", "mousedown");
+            });
+            document.getElementById("J3increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J3Increase", "mouseup");
+            });
+        
+            document.getElementById("J3decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J3Decrease", "mousedown");
+            });
+            document.getElementById("J3decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J3Decrease", "mouseup");
+            });
+        
+            document.getElementById("J4increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J4Increase", "mousedown");
+            });
+            document.getElementById("J4increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J4Increase", "mouseup");
+            });
+        
+            document.getElementById("J4decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J4Decrease", "mousedown");
+            });
+            document.getElementById("J4decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J4Decrease", "mouseup");
+            });
+        
+            document.getElementById("J5increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J5Increase", "mousedown");
+            });
+            document.getElementById("J5increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J5Increase", "mouseup");
+            });
+        
+            document.getElementById("J5decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J5Decrease", "mousedown");
+            });
+            document.getElementById("J5decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J5Decrease", "mouseup");
+            });
+        
+            document.getElementById("J6increaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J6Increase", "mousedown");
+            });
+            document.getElementById("J6increaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J6Increase", "mouseup");
+            });
+        
+            document.getElementById("J6decreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("J6Decrease", "mousedown");
+            });
+            document.getElementById("J6decreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("J6Decrease", "mouseup");
+            });
+        
+            document.getElementById("JFincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JFIncrease", "mousedown");
+            });
+            document.getElementById("JFincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JFIncrease", "mouseup");
+            });
+        
+            document.getElementById("JFdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JFDecrease", "mousedown");
+            });
+            document.getElementById("JFdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JFDecrease", "mouseup");
+            });
+        
+            document.getElementById("JLIKincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JLIKIncrease", "mousedown");
+            });
+            document.getElementById("JLIKincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JLIKIncrease", "mouseup");
+            });
+        
+            document.getElementById("JLIKdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JLIKDecrease", "mousedown");
+            });
+            document.getElementById("JLIKdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JLIKDecrease", "mouseup");
+            });
+        
+            document.getElementById("JLIFincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JLIFIncrease", "mousedown");
+            });
+            document.getElementById("JLIFincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JLIFIncrease", "mouseup");
+            });
+        
+            document.getElementById("JLIFdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JLIFDecrease", "mousedown");
+            });
+            document.getElementById("JLIFdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JLIFDecrease", "mouseup");
+            });
+        
+            document.getElementById("JRIKincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JRIKIncrease", "mousedown");
+            });
+            document.getElementById("JRIKincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JRIKIncrease", "mouseup");
+            });
+        
+            document.getElementById("JRIKdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JRIKDecrease", "mousedown");
+            });
+            document.getElementById("JRIKdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JRIKDecrease", "mouseup");
+            });
+        
+            document.getElementById("JRIFincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JRIFIncrease", "mousedown");
+            });
+            document.getElementById("JRIFincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JRIFIncrease", "mouseup");
+            });
+        
+            document.getElementById("JRIFdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("JRIFDecrease", "mousedown");
+            });
+            document.getElementById("JRIFdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("JRIFDecrease", "mouseup");
+            });
+        
+            document.getElementById("G3HincreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("G3HIncrease", "mousedown");
+            });
+            document.getElementById("G3HincreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("G3HIncrease", "mouseup");
+            });
+        
+            document.getElementById("G3HdecreaseButton").addEventListener("mousedown", ()=>{
+              this.publish("G3HDecrease", "mousedown");
+            });
+            document.getElementById("G3HdecreaseButton").addEventListener("mouseup", ()=>{
+              this.publish("G3HDecrease", "mouseup");
+            });
+        
+            //reset button
+            document.getElementById("resetButton").addEventListener("click", ()=>{
+              this.publish("reset", "reset");
+            })
+        
+            //user toggle
+            document.getElementById("userToggle").addEventListener("click", ()=>{
+              this.publish("user", "toggle");
+            })
+        
+            //measure toggle
+            document.getElementById("measureToggle").addEventListener("click", ()=>{
+              this.publish("measure", "toggle");
+            })*/
+
+Control panel Functions:
+
+ measureToggle(){
+        if(this.Mcount % 2 == 1){
+          this.measurement="degrees";
+  
+          document.getElementById("measureToggleText").setAttribute('text', 'value', "Degrees");
+  
+          document.getElementById("FRWvalue").setAttribute('text', 'value', (this.FRWvalue * (180/3.14)).toFixed(1));
+          document.getElementById("FLWvalue").setAttribute('text', 'value', (this.FLWvalue * (180/3.14)).toFixed(1));
+          document.getElementById("BRWvalue").setAttribute('text', 'value', (this.BRWvalue * (180/3.14)).toFixed(1));
+          document.getElementById("BLWvalue").setAttribute('text', 'value', (this.BLWvalue * (180/3.14)).toFixed(1));
+          document.getElementById("JJ1value").setAttribute('text', 'value', (this.JJ1value * (180/3.14)).toFixed(1));
+          document.getElementById("JJ2value").setAttribute('text', 'value', (this.JJ2value * (180/3.14)).toFixed(1));
+          document.getElementById("JJ3value").setAttribute('text', 'value', (this.JJ3value * (180/3.14)).toFixed(1));
+          document.getElementById("JJ4value").setAttribute('text', 'value', (this.JJ4value * (180/3.14)).toFixed(1));
+          document.getElementById("JJ5value").setAttribute('text', 'value', (this.JJ5value * (180/3.14)).toFixed(1));
+          document.getElementById("JJ6value").setAttribute('text', 'value', (this.JJ6value * (180/3.14)).toFixed(1));
+          document.getElementById("JJF1value").setAttribute('text', 'value', (this.JJF1value * (180/3.14)).toFixed(1));
+          document.getElementById("JJF2value").setAttribute('text', 'value', (this.JJF2value * (180/3.14)).toFixed(1));
+          document.getElementById("JJF3value").setAttribute('text', 'value', (this.JJF3value * (180/3.14)).toFixed(1));
+          document.getElementById("JJFT1value").setAttribute('text', 'value', (this.JJFT1value * (180/3.14)).toFixed(1));
+          document.getElementById("JJFT2value").setAttribute('text', 'value', (this.JJFT2value * (180/3.14)).toFixed(1));
+          document.getElementById("JJFT3value").setAttribute('text', 'value', (this.JJFT3value * (180/3.14)).toFixed(1));
+  
+          document.getElementById("J1value").setAttribute('text', 'value', (this.J1value * (180/3.14)).toFixed(1));
+          document.getElementById("J2value").setAttribute('text', 'value', (this.J2value * (180/3.14)).toFixed(1));
+          document.getElementById("J3value").setAttribute('text', 'value', (this.J3value * (180/3.14)).toFixed(1));
+          document.getElementById("J4value").setAttribute('text', 'value', (this.J4value * (180/3.14)).toFixed(1));
+          document.getElementById("J5value").setAttribute('text', 'value', (this.J5value * (180/3.14)).toFixed(1));
+          document.getElementById("J6value").setAttribute('text', 'value', (this.J6value * (180/3.14)).toFixed(1));
+          document.getElementById("JFvalue").setAttribute('text', 'value', (this.JFvalue * (180/3.14)).toFixed(1));
+          document.getElementById("JLIKvalue").setAttribute('text', 'value', (this.JLIKvalue * (180/3.14)).toFixed(1));
+          document.getElementById("JLIFvalue").setAttribute('text', 'value', (this.JLIFvalue * (180/3.14)).toFixed(1));
+          document.getElementById("JRIKvalue").setAttribute('text', 'value', (this.JRIKvalue * (180/3.14)).toFixed(1));
+          document.getElementById("JRIFvalue").setAttribute('text', 'value', (this.JRIFvalue * (180/3.14)).toFixed(1));
+  
+        console.log("degrees");
+        }else{
+          this.measurement="radians";
+          console.log("radians");
+  
+          document.getElementById("measureToggleText").setAttribute('text', 'value', "Radians");
+  
+          document.getElementById("FRWvalue").setAttribute('text', 'value', this.FRWvalue.toFixed(1));
+          document.getElementById("FLWvalue").setAttribute('text', 'value', this.FLWvalue.toFixed(1));
+          document.getElementById("BRWvalue").setAttribute('text', 'value', this.BRWvalue.toFixed(1));
+          document.getElementById("BLWvalue").setAttribute('text', 'value', this.BLWvalue.toFixed(1));
+          document.getElementById("JJ1value").setAttribute('text', 'value', this.JJ1value.toFixed(1));
+          document.getElementById("JJ2value").setAttribute('text', 'value', this.JJ2value.toFixed(1));
+          document.getElementById("JJ3value").setAttribute('text', 'value', this.JJ3value.toFixed(1));
+          document.getElementById("JJ4value").setAttribute('text', 'value', this.JJ4value.toFixed(1));
+          document.getElementById("JJ5value").setAttribute('text', 'value', this.JJ5value.toFixed(1));
+          document.getElementById("JJ6value").setAttribute('text', 'value', this.JJ6value.toFixed(1));
+          document.getElementById("JJF1value").setAttribute('text', 'value', this.JJF1value.toFixed(1));
+          document.getElementById("JJF2value").setAttribute('text', 'value', this.JJF2value.toFixed(1));
+          document.getElementById("JJF3value").setAttribute('text', 'value', this.JJF3value.toFixed(1));
+          document.getElementById("JJFT1value").setAttribute('text', 'value', this.JJFT1value.toFixed(1));
+          document.getElementById("JJFT2value").setAttribute('text', 'value', this.JJFT2value.toFixed(1));
+          document.getElementById("JJFT3value").setAttribute('text', 'value', this.JJFT3value.toFixed(1));
+  
+          document.getElementById("J1value").setAttribute('text', 'value', this.J1value.toFixed(1));
+          document.getElementById("J2value").setAttribute('text', 'value', this.J2value.toFixed(1));
+          document.getElementById("J3value").setAttribute('text', 'value', this.J3value.toFixed(1));
+          document.getElementById("J4value").setAttribute('text', 'value', this.J4value.toFixed(1));
+          document.getElementById("J5value").setAttribute('text', 'value', this.J5value.toFixed(1));
+          document.getElementById("J6value").setAttribute('text', 'value', this.J6value.toFixed(1));
+          document.getElementById("JFvalue").setAttribute('text', 'value', this.JFvalue.toFixed(1));
+          document.getElementById("JLIKvalue").setAttribute('text', 'value', this.JLIKvalue.toFixed(1));
+          document.getElementById("JLIFvalue").setAttribute('text', 'value', this.JLIFvalue.toFixed(1));
+          document.getElementById("JRIKvalue").setAttribute('text', 'value', this.JRIKvalue.toFixed(1));
+          document.getElementById("JRIFvalue").setAttribute('text', 'value', this.JRIFvalue.toFixed(1));
+        }
+        this.Mcount++;
+       
+      }
+
+      userToggle(){
+        this.count++;
+        console.log(this.count);
+        if(this.count % 2 == 1){
+          console.log("odd"); // single player
+          document.getElementById('userToggleText').setAttribute('text', 'value', "Single User");
+          this.unsubscribe("FRWIncrease", "mousedown", this.increaseFRW);
+      this.unsubscribe("FRWIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("FRWDecrease", "mousedown", this.decreaseFRW);
+      this.unsubscribe("FRWDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("FLWIncrease", "mousedown", this.increaseFLW);
+      this.unsubscribe("FLWIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("FLWDecrease", "mousedown", this.decreaseFLW);
+      this.unsubscribe("FLWDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("BRWIncrease", "mousedown", this.increaseBRW);
+      this.unsubscribe("BRWIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("BRWDecrease", "mousedown", this.decreaseBRW);
+      this.unsubscribe("BRWDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("BLWIncrease", "mousedown", this.increaseBLW);
+      this.unsubscribe("BLWIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("BLWDecrease", "mousedown", this.decreaseBLW);
+      this.unsubscribe("BLWDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ1Increase", "mousedown", this.increaseJJ1);
+      this.unsubscribe("JJ1Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ1Decrease", "mousedown", this.decreaseJJ1);
+      this.unsubscribe("JJ1Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ2Increase", "mousedown", this.increaseJJ2);
+      this.unsubscribe("JJ2Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ2Decrease", "mousedown", this.decreaseJJ2);
+      this.unsubscribe("JJ2Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ3Increase", "mousedown", this.increaseJJ3);
+      this.unsubscribe("JJ3Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ3Decrease", "mousedown", this.decreaseJJ3);
+      this.unsubscribe("JJ3Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ4Increase", "mousedown", this.increaseJJ4);
+      this.unsubscribe("JJ4Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ4Decrease", "mousedown", this.decreaseJJ4);
+      this.unsubscribe("JJ4Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ5Increase", "mousedown", this.increaseJJ5);
+      this.unsubscribe("JJ5Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ5Decrease", "mousedown", this.decreaseJJ5);
+      this.unsubscribe("JJ5Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ6Increase", "mousedown", this.increaseJJ6);
+      this.unsubscribe("JJ6Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJ6Decrease", "mousedown", this.decreaseJJ6);
+      this.unsubscribe("JJ6Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJF1Increase", "mousedown", this.increaseJJF1);
+      this.unsubscribe("JJF1Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJF1Decrease", "mousedown", this.decreaseJJF1);
+      this.unsubscribe("JJF1Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJF2Increase", "mousedown", this.increaseJJF2);
+      this.unsubscribe("JJF2Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJF2Decrease", "mousedown", this.decreaseJJF2);
+      this.unsubscribe("JJF2Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJF3Increase", "mousedown", this.increaseJJF3);
+      this.unsubscribe("JJF3Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJF3Decrease", "mousedown", this.decreaseJJF3);
+      this.unsubscribe("JJF3Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJFT1Increase", "mousedown", this.increaseJJFT1);
+      this.unsubscribe("JJFT1Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJFT1Decrease", "mousedown", this.decreaseJJFT1);
+      this.unsubscribe("JJFT1Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJFT2Increase", "mousedown", this.increaseJJFT2);
+      this.unsubscribe("JJFT2Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJFT2Decrease", "mousedown", this.decreaseJJFT2);
+      this.unsubscribe("JJFT2Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JJFT3Increase", "mousedown", this.increaseJJFT3);
+      this.unsubscribe("JJFT3Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("JJFT3Decrease", "mousedown", this.decreaseJJFT3);
+      this.unsubscribe("JJFT3Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("HHIncrease", "mousedown", this.increaseHH);
+      this.unsubscribe("HHIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("HHDecrease", "mousedown", this.decreaseHH);
+      this.unsubscribe("HHDecrease", "mouseup", this.mouseUp);
+  
+      //robot switching subscribes
+      this.unsubscribe("gen3Button", "click", this.gen3ButtonClick);
+      this.unsubscribe("huskyButton", "click", this.huskyButtonClick);
+  
+      //gen3 subscribes
+      this.unsubscribe("J1Increase", "mousedown", this.increaseJ1);
+      this.unsubscribe("J1Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("J1Decrease", "mousedown", this.decreaseJ1);
+      this.unsubscribe("J1Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("J2Increase", "mousedown", this.increaseJ2);
+      this.unsubscribe("J2Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("J2Decrease", "mousedown", this.decreaseJ2);
+      this.unsubscribe("J2Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("J3Increase", "mousedown", this.increaseJ3);
+      this.unsubscribe("J3Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("J3Decrease", "mousedown", this.decreaseJ3);
+      this.unsubscribe("J3Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("J4Increase", "mousedown", this.increaseJ4);
+      this.unsubscribe("J4Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("J4Decrease", "mousedown", this.decreaseJ4);
+      this.unsubscribe("J4Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("J5Increase", "mousedown", this.increaseJ5);
+      this.unsubscribe("J5Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("J5Decrease", "mousedown", this.decreaseJ5);
+      this.unsubscribe("J5Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("J6Increase", "mousedown", this.increaseJ6);
+      this.unsubscribe("J6Increase", "mouseup", this.mouseUp);
+      this.unsubscribe("J6Decrease", "mousedown", this.decreaseJ6);
+      this.unsubscribe("J6Decrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JFIncrease", "mousedown", this.increaseJF);
+      this.unsubscribe("JFIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JFDecrease", "mousedown", this.decreaseJF);
+      this.unsubscribe("JFDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JLIKIncrease", "mousedown", this.increaseJLIK);
+      this.unsubscribe("JLIKIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JLIKDecrease", "mousedown", this.decreaseJLIK);
+      this.unsubscribe("JLIKDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JLIFIncrease", "mousedown", this.increaseJLIF);
+      this.unsubscribe("JLIFIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JLIFDecrease", "mousedown", this.decreaseJLIF);
+      this.unsubscribe("JLIFDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JRIKIncrease", "mousedown", this.increaseJRIK);
+      this.unsubscribe("JRIKIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JRIKDecrease", "mousedown", this.decreaseJRIK);
+      this.unsubscribe("JRIKDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JRIFIncrease", "mousedown", this.increaseJRIF);
+      this.unsubscribe("JRIFIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("JRIFDecrease", "mousedown", this.decreaseJRIF);
+      this.unsubscribe("JRIFDecrease", "mouseup", this.mouseUp);
+      this.unsubscribe("G3HIncrease", "mousedown", this.increaseG3H);
+      this.unsubscribe("G3HIncrease", "mouseup", this.mouseUp);
+      this.unsubscribe("G3HDecrease", "mousedown", this.decreaseG3H);
+      this.unsubscribe("G3HDecrease", "mouseup", this.mouseUp);
+  
+      
+      document.getElementById("huskyButton").setAttribute('husky-click', '');
+      document.getElementById("gen3Button").setAttribute('gen3-click', '');
+      document.getElementById("FRWincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("FLWincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("BRWincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("BLWincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJ1increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJ2increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJ3increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJ4increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJ5increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJ6increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJF1increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJF2increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJF3increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJFT1increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJFT2increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JJFT3increaseButton").setAttribute('increase-click', '');
+      document.getElementById("HHincreaseButton").setAttribute('increase-click', '');
+  
+      document.getElementById("J1increaseButton").setAttribute('increase-click', '');
+      document.getElementById("J2increaseButton").setAttribute('increase-click', '');
+      document.getElementById("J3increaseButton").setAttribute('increase-click', '');
+      document.getElementById("J4increaseButton").setAttribute('increase-click', '');
+      document.getElementById("J5increaseButton").setAttribute('increase-click', '');
+      document.getElementById("J6increaseButton").setAttribute('increase-click', '');
+      document.getElementById("JFincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("JLIKincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("JLIFincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("JRIKincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("JRIFincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("JLIKincreaseButton").setAttribute('increase-click', '');
+      document.getElementById("G3HincreaseButton").setAttribute('increase-click', '');
+      
+  
+      document.getElementById("FRWdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("FLWdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("BRWdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("BLWdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJ1decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJ2decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJ3decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJ4decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJ5decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJ6decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJF1decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJF2decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJF3decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJFT1decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJFT2decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JJFT3decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("HHdecreaseButton").setAttribute('decrease-click', '');
+      
+  
+      document.getElementById("J1decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("J2decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("J3decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("J4decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("J5decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("J6decreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JFdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JLIKdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JLIFdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JRIKdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JRIFdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("JLIKdecreaseButton").setAttribute('decrease-click', '');
+      document.getElementById("G3HdecreaseButton").setAttribute('decrease-click', '');
+  
+      huskyFrontRightWheelValue = this.FRWvalue;
+      huskyFrontLeftWheelValue = this.FLWvalue;
+      huskyBackRightWheelValue = this.BRWvalue;
+      huskyBackLeftWheelValue = this.BLWvalue;
+      j2n6s300Joint1Value = this.JJ1value;
+      j2n6s300Joint2Value = this.JJ2value;
+      j2n6s300Joint3Value = this.JJ3value;
+      j2n6s300Joint4Value = this.JJ4value;
+      j2n6s300Joint5Value = this.JJ5value;
+      j2n6s300Joint6Value = this.JJ6value;
+      j2n6s300FingerJoint1Value = this.JJF1value;
+      j2n6s300FingerJoint2Value = this.JJF2value;
+      j2n6s300FingerJoint3Value = this.JJF3value;
+      j2n6s300FingerTipJoint1Value = this.JJFT1value;
+      j2n6s300FingerTipJoint2Value = this.JJFT2value;
+      j2n6s300FingerTipJoint3Value = this.JJFT3value;
+  
+      joint1Value = this.J1value;
+      joint2Value = this.J2value;
+      joint3Value = this.J3value;
+      joint4Value = this.J4value;
+      joint5Value = this.J5value;
+      joint6Value = this;J6value;
+      fingerJointValue = this.JFvalue;
+      jointLIFValue = this.JLIFvalue;
+      jointLIKValue = this.JLIKvalue;
+      jointRIFValue = this.JRIFvalue;
+      jointRIKValue = this.JRIKvalue;
+  
+      
+        }else{
+          console.log("even"); //multiplayer
+          document.getElementById('userToggleText').setAttribute('text', 'value', "Multi User");
+          this.subscribe("FRWIncrease", "mousedown", this.increaseFRW);
+      this.subscribe("FRWIncrease", "mouseup", this.mouseUp);
+      this.subscribe("FRWDecrease", "mousedown", this.decreaseFRW);
+      this.subscribe("FRWDecrease", "mouseup", this.mouseUp);
+      this.subscribe("FLWIncrease", "mousedown", this.increaseFLW);
+      this.subscribe("FLWIncrease", "mouseup", this.mouseUp);
+      this.subscribe("FLWDecrease", "mousedown", this.decreaseFLW);
+      this.subscribe("FLWDecrease", "mouseup", this.mouseUp);
+      this.subscribe("BRWIncrease", "mousedown", this.increaseBRW);
+      this.subscribe("BRWIncrease", "mouseup", this.mouseUp);
+      this.subscribe("BRWDecrease", "mousedown", this.decreaseBRW);
+      this.subscribe("BRWDecrease", "mouseup", this.mouseUp);
+      this.subscribe("BLWIncrease", "mousedown", this.increaseBLW);
+      this.subscribe("BLWIncrease", "mouseup", this.mouseUp);
+      this.subscribe("BLWDecrease", "mousedown", this.decreaseBLW);
+      this.subscribe("BLWDecrease", "mouseup", this.mouseUp);
+      this.subscribe("JJ1Increase", "mousedown", this.increaseJJ1);
+      this.subscribe("JJ1Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJ1Decrease", "mousedown", this.decreaseJJ1);
+      this.subscribe("JJ1Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJ2Increase", "mousedown", this.increaseJJ2);
+      this.subscribe("JJ2Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJ2Decrease", "mousedown", this.decreaseJJ2);
+      this.subscribe("JJ2Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJ3Increase", "mousedown", this.increaseJJ3);
+      this.subscribe("JJ3Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJ3Decrease", "mousedown", this.decreaseJJ3);
+      this.subscribe("JJ3Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJ4Increase", "mousedown", this.increaseJJ4);
+      this.subscribe("JJ4Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJ4Decrease", "mousedown", this.decreaseJJ4);
+      this.subscribe("JJ4Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJ5Increase", "mousedown", this.increaseJJ5);
+      this.subscribe("JJ5Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJ5Decrease", "mousedown", this.decreaseJJ5);
+      this.subscribe("JJ5Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJ6Increase", "mousedown", this.increaseJJ6);
+      this.subscribe("JJ6Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJ6Decrease", "mousedown", this.decreaseJJ6);
+      this.subscribe("JJ6Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJF1Increase", "mousedown", this.increaseJJF1);
+      this.subscribe("JJF1Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJF1Decrease", "mousedown", this.decreaseJJF1);
+      this.subscribe("JJF1Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJF2Increase", "mousedown", this.increaseJJF2);
+      this.subscribe("JJF2Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJF2Decrease", "mousedown", this.decreaseJJF2);
+      this.subscribe("JJF2Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJF3Increase", "mousedown", this.increaseJJF3);
+      this.subscribe("JJF3Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJF3Decrease", "mousedown", this.decreaseJJF3);
+      this.subscribe("JJF3Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJFT1Increase", "mousedown", this.increaseJJFT1);
+      this.subscribe("JJFT1Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJFT1Decrease", "mousedown", this.decreaseJJFT1);
+      this.subscribe("JJFT1Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJFT2Increase", "mousedown", this.increaseJJFT2);
+      this.subscribe("JJFT2Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJFT2Decrease", "mousedown", this.decreaseJJFT2);
+      this.subscribe("JJFT2Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JJFT3Increase", "mousedown", this.increaseJJFT3);
+      this.subscribe("JJFT3Increase", "mouseup", this.mouseUp);
+      this.subscribe("JJFT3Decrease", "mousedown", this.decreaseJJFT3);
+      this.subscribe("JJFT3Decrease", "mouseup", this.mouseUp);
+      this.subscribe("HHIncrease", "mousedown", this.increaseHH);
+      this.subscribe("HHIncrease", "mouseup", this.mouseUp);
+      this.subscribe("HHDecrease", "mousedown", this.decreaseHH);
+      this.subscribe("HHDecrease", "mouseup", this.mouseUp);
+  
+      //robot switching subscribes
+      this.subscribe("gen3Button", "click", this.gen3ButtonClick);
+      this.subscribe("huskyButton", "click", this.huskyButtonClick);
+  
+      //gen3 subscribes
+      this.subscribe("J1Increase", "mousedown", this.increaseJ1);
+      this.subscribe("J1Increase", "mouseup", this.mouseUp);
+      this.subscribe("J1Decrease", "mousedown", this.decreaseJ1);
+      this.subscribe("J1Decrease", "mouseup", this.mouseUp);
+      this.subscribe("J2Increase", "mousedown", this.increaseJ2);
+      this.subscribe("J2Increase", "mouseup", this.mouseUp);
+      this.subscribe("J2Decrease", "mousedown", this.decreaseJ2);
+      this.subscribe("J2Decrease", "mouseup", this.mouseUp);
+      this.subscribe("J3Increase", "mousedown", this.increaseJ3);
+      this.subscribe("J3Increase", "mouseup", this.mouseUp);
+      this.subscribe("J3Decrease", "mousedown", this.decreaseJ3);
+      this.subscribe("J3Decrease", "mouseup", this.mouseUp);
+      this.subscribe("J4Increase", "mousedown", this.increaseJ4);
+      this.subscribe("J4Increase", "mouseup", this.mouseUp);
+      this.subscribe("J4Decrease", "mousedown", this.decreaseJ4);
+      this.subscribe("J4Decrease", "mouseup", this.mouseUp);
+      this.subscribe("J5Increase", "mousedown", this.increaseJ5);
+      this.subscribe("J5Increase", "mouseup", this.mouseUp);
+      this.subscribe("J5Decrease", "mousedown", this.decreaseJ5);
+      this.subscribe("J5Decrease", "mouseup", this.mouseUp);
+      this.subscribe("J6Increase", "mousedown", this.increaseJ6);
+      this.subscribe("J6Increase", "mouseup", this.mouseUp);
+      this.subscribe("J6Decrease", "mousedown", this.decreaseJ6);
+      this.subscribe("J6Decrease", "mouseup", this.mouseUp);
+      this.subscribe("JFIncrease", "mousedown", this.increaseJF);
+      this.subscribe("JFIncrease", "mouseup", this.mouseUp);
+      this.subscribe("JFDecrease", "mousedown", this.decreaseJF);
+      this.subscribe("JFDecrease", "mouseup", this.mouseUp);
+      this.subscribe("JLIKIncrease", "mousedown", this.increaseJLIK);
+      this.subscribe("JLIKIncrease", "mouseup", this.mouseUp);
+      this.subscribe("JLIKDecrease", "mousedown", this.decreaseJLIK);
+      this.subscribe("JLIKDecrease", "mouseup", this.mouseUp);
+      this.subscribe("JLIFIncrease", "mousedown", this.increaseJLIF);
+      this.subscribe("JLIFIncrease", "mouseup", this.mouseUp);
+      this.subscribe("JLIFDecrease", "mousedown", this.decreaseJLIF);
+      this.subscribe("JLIFDecrease", "mouseup", this.mouseUp);
+      this.subscribe("JRIKIncrease", "mousedown", this.increaseJRIK);
+      this.subscribe("JRIKIncrease", "mouseup", this.mouseUp);
+      this.subscribe("JRIKDecrease", "mousedown", this.decreaseJRIK);
+      this.subscribe("JRIKDecrease", "mouseup", this.mouseUp);
+      this.subscribe("JRIFIncrease", "mousedown", this.increaseJRIF);
+      this.subscribe("JRIFIncrease", "mouseup", this.mouseUp);
+      this.subscribe("JRIFDecrease", "mousedown", this.decreaseJRIF);
+      this.subscribe("JRIFDecrease", "mouseup", this.mouseUp);
+      this.subscribe("G3HIncrease", "mousedown", this.increaseG3H);
+      this.subscribe("G3HIncrease", "mouseup", this.mouseUp);
+      this.subscribe("G3HDecrease", "mousedown", this.decreaseG3H);
+      this.subscribe("G3HDecrease", "mouseup", this.mouseUp);
+  
+      document.getElementById("huskyButton").removeAttribute('husky-click');
+      document.getElementById("gen3Button").removeAttribute('gen3-click');
+      document.getElementById("FRWincreaseButton").removeAttribute('increase-click');
+      document.getElementById("FLWincreaseButton").removeAttribute('increase-click');
+      document.getElementById("BRWincreaseButton").removeAttribute('increase-click');
+      document.getElementById("BLWincreaseButton").removeAttribute('increase-click');
+      document.getElementById("JJ1increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJ2increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJ3increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJ4increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJ5increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJ6increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJF1increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJF2increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJF3increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJFT1increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJFT2increaseButton").removeAttribute('increase-click');
+      document.getElementById("JJFT3increaseButton").removeAttribute('increase-click');
+      document.getElementById("HHincreaseButton").removeAttribute('increase-click');
+  
+      document.getElementById("J1increaseButton").removeAttribute('increase-click');
+      document.getElementById("J2increaseButton").removeAttribute('increase-click');
+      document.getElementById("J3increaseButton").removeAttribute('increase-click');
+      document.getElementById("J4increaseButton").removeAttribute('increase-click');
+      document.getElementById("J5increaseButton").removeAttribute('increase-click');
+      document.getElementById("J6increaseButton").removeAttribute('increase-click');
+      document.getElementById("JFincreaseButton").removeAttribute('increase-click');
+      document.getElementById("JLIKincreaseButton").removeAttribute('increase-click');
+      document.getElementById("JLIFincreaseButton").removeAttribute('increase-click');
+      document.getElementById("JRIKincreaseButton").removeAttribute('increase-click');
+      document.getElementById("JRIFincreaseButton").removeAttribute('increase-click');
+      document.getElementById("JLIKincreaseButton").removeAttribute('increase-click');
+      document.getElementById("G3HincreaseButton").removeAttribute('increase-click');
+      
+  
+      document.getElementById("FRWdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("FLWdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("BRWdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("BLWdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJ1decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJ2decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJ3decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJ4decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJ5decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJ6decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJF1decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJF2decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJF3decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJFT1decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJFT2decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JJFT3decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("HHdecreaseButton").removeAttribute('decrease-click');
+      
+  
+      document.getElementById("J1decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("J2decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("J3decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("J4decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("J5decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("J6decreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JFdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JLIKdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JLIFdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JRIKdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JRIFdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("JLIKdecreaseButton").removeAttribute('decrease-click');
+      document.getElementById("G3HdecreaseButton").removeAttribute('decrease-click');
+      
+        }
+      }
+
+      resetValues(){
+       //reset values
+      this.FRWvalue = 0;
+      this.FLWvalue = 0;
+      this.BRWvalue = 0;
+      this.BLWvalue = 0;
+      this.JJ1value = 0;
+      this.JJ2value = 0;
+      this.JJ3value = 0;
+      this.JJ4value = 0;
+      this.JJ5value = 0;
+      this.JJ6value = 0;
+      this.JJF1value = 0;
+      this.JJF2value = 0;
+      this.JJF3value = 0;
+      this.JJFT1value = 0;
+      this.JJFT2value = 0;
+      this.JJFT3value = 0;
+  
+      //gen3 values
+      this.J1value = 0;
+      this.J2value = 0;
+      this.J3value = 0;
+      this.J4value = 0;
+      this.J5value = 0;
+      this.J6value = 0;
+      this.JFvalue = 0;
+      this.JLIKvalue = 0;
+      this.JLIFvalue = 0;
+      this.JRIKvalue = 0;
+      this.JRIFvalue = 0;
+  
+      
+  
+      //set text values
+      document.getElementById('FRWvalue').setAttribute('text', 'value', this.FRWvalue.toFixed(1));
+      document.getElementById('FLWvalue').setAttribute('text', 'value', this.FLWvalue.toFixed(1));
+      document.getElementById('BRWvalue').setAttribute('text', 'value', this.BRWvalue.toFixed(1));
+      document.getElementById('BLWvalue').setAttribute('text', 'value', this.BLWvalue.toFixed(1));
+      document.getElementById('JJ1value').setAttribute('text', 'value', this.JJ1value.toFixed(1));
+      document.getElementById('JJ2value').setAttribute('text', 'value', this.JJ2value.toFixed(1));
+      document.getElementById('JJ3value').setAttribute('text', 'value', this.JJ3value.toFixed(1));
+      document.getElementById('JJ4value').setAttribute('text', 'value', this.JJ4value.toFixed(1));
+      document.getElementById('JJ5value').setAttribute('text', 'value', this.JJ5value.toFixed(1));
+      document.getElementById('JJ6value').setAttribute('text', 'value', this.JJ6value.toFixed(1));
+      document.getElementById('JJF1value').setAttribute('text', 'value', this.JJF1value.toFixed(1));
+      document.getElementById('JJF2value').setAttribute('text', 'value', this.JJF2value.toFixed(1));
+      document.getElementById('JJF3value').setAttribute('text', 'value', this.JJF3value.toFixed(1));
+      document.getElementById('JJFT1value').setAttribute('text', 'value', this.JJFT1value.toFixed(1));
+      document.getElementById('JJFT2value').setAttribute('text', 'value', this.JJFT2value.toFixed(1));
+      document.getElementById('JJFT3value').setAttribute('text', 'value', this.JJFT3value.toFixed(1));
+      document.getElementById('J1value').setAttribute('text', 'value', this.J1value.toFixed(1));
+      document.getElementById('J2value').setAttribute('text', 'value', this.J2value.toFixed(1));
+      document.getElementById('J3value').setAttribute('text', 'value', this.J3value.toFixed(1));
+      document.getElementById('J4value').setAttribute('text', 'value', this.J4value.toFixed(1));
+      document.getElementById('J5value').setAttribute('text', 'value', this.J5value.toFixed(1));
+      document.getElementById('J6value').setAttribute('text', 'value', this.J6value.toFixed(1));
+      document.getElementById('JLIKvalue').setAttribute('text', 'value', this.JLIKvalue.toFixed(1));
+      document.getElementById('JLIFvalue').setAttribute('text', 'value', this.JLIFvalue.toFixed(1));
+      document.getElementById('JRIKvalue').setAttribute('text', 'value', this.JRIKvalue.toFixed(1));
+      document.getElementById('JRIFvalue').setAttribute('text', 'value', this.JRIFvalue.toFixed(1));
+  
+      //set joints
+      husky.setJointValue("front_right_wheel", this.FRWvalue);
+      husky.setJointValue("front_left_wheel", this.FLWvalue);
+      husky.setJointValue("rear_right_wheel", this.BRWvalue);
+      husky.setJointValue("rear_left_wheel", this.BLWvalue);
+      husky.setJointValue("j2n6s300_joint_1", this.JJ1value);
+      husky.setJointValue("j2n6s300_joint_2", this.JJ2value);
+      husky.setJointValue("j2n6s300_joint_3", this.JJ3value);
+      husky.setJointValue("j2n6s300_joint_4", this.JJ4value);
+      husky.setJointValue("j2n6s300_joint_5", this.JJ5value);
+      husky.setJointValue("j2n6s300_joint_6", this.JJ6value);
+      husky.setJointValue("j2n6s300_joint_finger_1", this.JJF1value);
+      husky.setJointValue("j2n6s300_joint_finger_2", this.JJF2value);
+      husky.setJointValue("j2n6s300_joint_finger_3", this.JJF3value);
+      husky.setJointValue("j2n6s300_joint_finger_tip_1", this.JJFT1value);
+      husky.setJointValue("j2n6s300_joint_finger_tip_2", this.JJFT2value);
+      husky.setJointValue("j2n6s300_joint_finger_tip_3", this.JJFT3value);
+      gen3.setJointValue("joint_1", this.J1value);
+      gen3.setJointValue("joint_2", this.J2value);
+      gen3.setJointValue("joint_3", this.J3value);
+      gen3.setJointValue("joint_4", this.J4value);
+      gen3.setJointValue("joint_5", this.J5value);
+      gen3.setJointValue("joint_6", this.J6value);
+      gen3.setJointValue("finger_joint", this.JFvalue);
+      gen3.setJointValue("left_inner_knuckle_joint", this.JLIKvalue);
+      gen3.setJointValue("left_inner_finger_joint", this.JLIFvalue);
+      gen3.setJointValue("right_inner_knuckle_joint", this.JRIKvalue);
+      gen3.setJointValue("right_inner_finger_joint", this.JRIFvalue);
+      }
+
+Control Panel Subscribes:
+
+ //husky subscribes
+    this.subscribe("FRWIncrease", "mousedown", this.increaseFRW);
+    this.subscribe("FRWIncrease", "mouseup", this.mouseUp);
+    this.subscribe("FRWDecrease", "mousedown", this.decreaseFRW);
+    this.subscribe("FRWDecrease", "mouseup", this.mouseUp);
+    this.subscribe("FLWIncrease", "mousedown", this.increaseFLW);
+    this.subscribe("FLWIncrease", "mouseup", this.mouseUp);
+    this.subscribe("FLWDecrease", "mousedown", this.decreaseFLW);
+    this.subscribe("FLWDecrease", "mouseup", this.mouseUp);
+    this.subscribe("BRWIncrease", "mousedown", this.increaseBRW);
+    this.subscribe("BRWIncrease", "mouseup", this.mouseUp);
+    this.subscribe("BRWDecrease", "mousedown", this.decreaseBRW);
+    this.subscribe("BRWDecrease", "mouseup", this.mouseUp);
+    this.subscribe("BLWIncrease", "mousedown", this.increaseBLW);
+    this.subscribe("BLWIncrease", "mouseup", this.mouseUp);
+    this.subscribe("BLWDecrease", "mousedown", this.decreaseBLW);
+    this.subscribe("BLWDecrease", "mouseup", this.mouseUp);
+    this.subscribe("JJ1Increase", "mousedown", this.increaseJJ1);
+    this.subscribe("JJ1Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJ1Decrease", "mousedown", this.decreaseJJ1);
+    this.subscribe("JJ1Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJ2Increase", "mousedown", this.increaseJJ2);
+    this.subscribe("JJ2Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJ2Decrease", "mousedown", this.decreaseJJ2);
+    this.subscribe("JJ2Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJ3Increase", "mousedown", this.increaseJJ3);
+    this.subscribe("JJ3Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJ3Decrease", "mousedown", this.decreaseJJ3);
+    this.subscribe("JJ3Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJ4Increase", "mousedown", this.increaseJJ4);
+    this.subscribe("JJ4Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJ4Decrease", "mousedown", this.decreaseJJ4);
+    this.subscribe("JJ4Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJ5Increase", "mousedown", this.increaseJJ5);
+    this.subscribe("JJ5Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJ5Decrease", "mousedown", this.decreaseJJ5);
+    this.subscribe("JJ5Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJ6Increase", "mousedown", this.increaseJJ6);
+    this.subscribe("JJ6Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJ6Decrease", "mousedown", this.decreaseJJ6);
+    this.subscribe("JJ6Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJF1Increase", "mousedown", this.increaseJJF1);
+    this.subscribe("JJF1Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJF1Decrease", "mousedown", this.decreaseJJF1);
+    this.subscribe("JJF1Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJF2Increase", "mousedown", this.increaseJJF2);
+    this.subscribe("JJF2Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJF2Decrease", "mousedown", this.decreaseJJF2);
+    this.subscribe("JJF2Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJF3Increase", "mousedown", this.increaseJJF3);
+    this.subscribe("JJF3Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJF3Decrease", "mousedown", this.decreaseJJF3);
+    this.subscribe("JJF3Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJFT1Increase", "mousedown", this.increaseJJFT1);
+    this.subscribe("JJFT1Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJFT1Decrease", "mousedown", this.decreaseJJFT1);
+    this.subscribe("JJFT1Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJFT2Increase", "mousedown", this.increaseJJFT2);
+    this.subscribe("JJFT2Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJFT2Decrease", "mousedown", this.decreaseJJFT2);
+    this.subscribe("JJFT2Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JJFT3Increase", "mousedown", this.increaseJJFT3);
+    this.subscribe("JJFT3Increase", "mouseup", this.mouseUp);
+    this.subscribe("JJFT3Decrease", "mousedown", this.decreaseJJFT3);
+    this.subscribe("JJFT3Decrease", "mouseup", this.mouseUp);
+    this.subscribe("HHIncrease", "mousedown", this.increaseHH);
+    this.subscribe("HHIncrease", "mouseup", this.mouseUp);
+    this.subscribe("HHDecrease", "mousedown", this.decreaseHH);
+    this.subscribe("HHDecrease", "mouseup", this.mouseUp);
+
+    //robot switching subscribes
+    this.subscribe("gen3Button", "click", this.gen3ButtonClick);
+    this.subscribe("huskyButton", "click", this.huskyButtonClick);
+
+    //gen3 subscribes
+    this.subscribe("J1Increase", "mousedown", this.increaseJ1);
+    this.subscribe("J1Increase", "mouseup", this.mouseUp);
+    this.subscribe("J1Decrease", "mousedown", this.decreaseJ1);
+    this.subscribe("J1Decrease", "mouseup", this.mouseUp);
+    this.subscribe("J2Increase", "mousedown", this.increaseJ2);
+    this.subscribe("J2Increase", "mouseup", this.mouseUp);
+    this.subscribe("J2Decrease", "mousedown", this.decreaseJ2);
+    this.subscribe("J2Decrease", "mouseup", this.mouseUp);
+    this.subscribe("J3Increase", "mousedown", this.increaseJ3);
+    this.subscribe("J3Increase", "mouseup", this.mouseUp);
+    this.subscribe("J3Decrease", "mousedown", this.decreaseJ3);
+    this.subscribe("J3Decrease", "mouseup", this.mouseUp);
+    this.subscribe("J4Increase", "mousedown", this.increaseJ4);
+    this.subscribe("J4Increase", "mouseup", this.mouseUp);
+    this.subscribe("J4Decrease", "mousedown", this.decreaseJ4);
+    this.subscribe("J4Decrease", "mouseup", this.mouseUp);
+    this.subscribe("J5Increase", "mousedown", this.increaseJ5);
+    this.subscribe("J5Increase", "mouseup", this.mouseUp);
+    this.subscribe("J5Decrease", "mousedown", this.decreaseJ5);
+    this.subscribe("J5Decrease", "mouseup", this.mouseUp);
+    this.subscribe("J6Increase", "mousedown", this.increaseJ6);
+    this.subscribe("J6Increase", "mouseup", this.mouseUp);
+    this.subscribe("J6Decrease", "mousedown", this.decreaseJ6);
+    this.subscribe("J6Decrease", "mouseup", this.mouseUp);
+    this.subscribe("JFIncrease", "mousedown", this.increaseJF);
+    this.subscribe("JFIncrease", "mouseup", this.mouseUp);
+    this.subscribe("JFDecrease", "mousedown", this.decreaseJF);
+    this.subscribe("JFDecrease", "mouseup", this.mouseUp);
+    this.subscribe("JLIKIncrease", "mousedown", this.increaseJLIK);
+    this.subscribe("JLIKIncrease", "mouseup", this.mouseUp);
+    this.subscribe("JLIKDecrease", "mousedown", this.decreaseJLIK);
+    this.subscribe("JLIKDecrease", "mouseup", this.mouseUp);
+    this.subscribe("JLIFIncrease", "mousedown", this.increaseJLIF);
+    this.subscribe("JLIFIncrease", "mouseup", this.mouseUp);
+    this.subscribe("JLIFDecrease", "mousedown", this.decreaseJLIF);
+    this.subscribe("JLIFDecrease", "mouseup", this.mouseUp);
+    this.subscribe("JRIKIncrease", "mousedown", this.increaseJRIK);
+    this.subscribe("JRIKIncrease", "mouseup", this.mouseUp);
+    this.subscribe("JRIKDecrease", "mousedown", this.decreaseJRIK);
+    this.subscribe("JRIKDecrease", "mouseup", this.mouseUp);
+    this.subscribe("JRIFIncrease", "mousedown", this.increaseJRIF);
+    this.subscribe("JRIFIncrease", "mouseup", this.mouseUp);
+    this.subscribe("JRIFDecrease", "mousedown", this.decreaseJRIF);
+    this.subscribe("JRIFDecrease", "mouseup", this.mouseUp);
+    this.subscribe("G3HIncrease", "mousedown", this.increaseG3H);
+    this.subscribe("G3HIncrease", "mouseup", this.mouseUp);
+    this.subscribe("G3HDecrease", "mousedown", this.decreaseG3H);
+    this.subscribe("G3HDecrease", "mouseup", this.mouseUp);
+    this.subscribe("user", "toggle", this.userToggle);
+
+    //reset button subscribe
+    this.subscribe("reset", "reset", this.resetValues);
+
+    //measure button subscribe
+    this.subscribe("measure", "toggle", this.measureToggle);
+
+    decreaseG3H(){
+        gen3.position.y -=0.01;
+        var textEntity = document.getElementById('G3Hvalue');
+        textEntity.setAttribute('text', 'value', gen3.position.y.toFixed(1));
+        this.future(5).decreaseG3H();
+      }
+  
+      increaseG3H(){
+        gen3.position.y +=0.01;
+        var textEntity = document.getElementById('G3Hvalue'); 
+        textEntity.setAttribute('text', 'value', gen3.position.y.toFixed(1));
+        this.future(5).increaseG3H();
+      }
+  
+      decreaseJLIK(){
+        this.JLIKvalue -= 0.01;
+        console.log(this.JLIKvalue);
+        gen3.setJointValue("left_inner_knuckle_joint", this.JLIKvalue);
+        var textEntity = document.getElementById('JLIKvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JLIKvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JLIKvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJLIK();
+  
+        if(this.JLIKvalue <= 0){
+          this.JLIKvalue = 0;
+        }
+      }
+  
+      decreaseJLIF(){
+        this.JLIFvalue -= 0.01;
+        console.log(this.JLIFvalue);
+        gen3.setJointValue("left_inner_finger_joint", this.JLIFvalue);
+        var textEntity = document.getElementById('JLIFvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JLIFvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JLIFvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJLIF();
+  
+        if(this.JLIFvalue <= -1){
+          this.JLIFvalue = -1;
+        }
+      }
+  
+      decreaseJRIK(){
+        this.JRIKvalue -= 0.01;
+        console.log(this.JRIKvalue);
+        gen3.setJointValue("right_inner_knuckle_joint", this.JRIKvalue);
+        var textEntity = document.getElementById('JRIKvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JRIKvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JRIKvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJRIK();
+  
+        if(this.JRIKvalue <= 0){
+          this.JRIKvalue = 0;
+        }
+      }
+  
+      decreaseJRIF(){
+        this.JRIFvalue -= 0.01;
+        console.log(this.JRIFvalue);
+        gen3.setJointValue("right_inner_finger_joint", this.JRIFvalue);
+        var textEntity = document.getElementById('JRIFvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JRIFvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JRIFvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJRIF();
+  
+        if(this.JRIFvalue <= -1){
+          this.JRIFvalue = -1;
+        }
+      }
+       decreaseJ3(){
+        this.J3value -= 0.01;
+        console.log(this.J3value);
+        gen3.setJointValue("joint_3", this.J3value);
+        var textEntity = document.getElementById('J3value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J3value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).decreaseJ3();
+  
+        if(this.J3value <= -2.7){
+          this.J3value = -2.7;
+        }
+      }
+  
+      decreaseJ4(){
+        this.J4value -= 0.01;
+        console.log(this.J4value);
+        gen3.setJointValue("joint_4", this.J4value);
+        var textEntity = document.getElementById('J4value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J4value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J4value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJ4();
+      }
+  
+      decreaseJ5(){
+        this.J5value -= 0.01;
+        console.log(this.J5value);
+        gen3.setJointValue("joint_5", this.J5value);
+        var textEntity = document.getElementById('J5value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J5value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J5value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).decreaseJ5();
+  
+        if(this.J5value <= -2.3){
+          this.J5value = -2.3;
+        }
+      }
+  
+      decreaseJ6(){
+        this.J6value -= 0.01;
+        console.log(this.J6value);
+        gen3.setJointValue("joint_6", this.J6value);
+        var textEntity = document.getElementById('J6value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J6value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J6value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJ6();
+      }
+  
+      decreaseJF(){
+        this.JFvalue -= 0.01;
+        console.log(this.JFvalue);
+        gen3.setJointValue("finger_joint", this.JFvalue);
+        var textEntity = document.getElementById('JFvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JFvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JFvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJF();
+  
+        if(this.JFvalue <= -1){
+          this.JFvalue = -1;
+        }
+      }
+  
+      
+       increaseJRIF(){
+        this.JRIFvalue += 0.01;
+        console.log(this.JRIFvalue);
+        gen3.setJointValue("right_inner_finger_joint", this.JRIFvalue);
+        var textEntity = document.getElementById('JRIFvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JRIFvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JRIFvalue * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseJRIF();
+  
+        if(this.JRIFvalue >= 1){
+          this.JRIFvalue = 1;
+        }
+      }
+  
+      decreaseJ1(){
+        this.J1value -= 0.01;
+        console.log(this.J1value);
+        gen3.setJointValue("joint_1", this.J1value);
+        var textEntity = document.getElementById('J1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', this.J1value * (180/3.14).toFixed(1));
+        }
+        
+        this.future(5).decreaseJ1();
+      }
+  
+      decreaseJ2(){
+        this.J2value -= 0.01;
+        console.log(this.J2value);
+        gen3.setJointValue("joint_2", this.J2value);
+        var textEntity = document.getElementById('J2value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J2value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJ2();
+  
+        if(this.J2value <= -2.5){
+          this.J2value = -2.5;
+        }
+      }
+  
+     
+ increaseJ1(){
+        this.J1value += 0.01;
+        console.log(this.J1value);
+        gen3.setJointValue("joint_1", this.J1value);
+        var textEntity = document.getElementById('J1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J1value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJ1();
+      }
+  
+      increaseJ2(){
+        this.J2value += 0.01;
+        console.log(this.J2value);
+        gen3.setJointValue("joint_2", this.J2value);
+        var textEntity = document.getElementById('J2value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J2value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJ2();
+  
+        if(this.J2value >= 2.5){
+          this.J2value = 2.5;
+        }
+      }
+  
+      increaseJ3(){
+        this.J3value += 0.01;
+        console.log(this.J3value);
+        gen3.setJointValue("joint_3", this.J3value);
+        var textEntity = document.getElementById('J3value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J3value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJ3();
+  
+        if(this.J3value >= 2.7){
+          this.J3value = 2.7;
+        }
+      }
+  
+      increaseJ4(){
+        this.J4value += 0.01;
+        console.log(this.J4value);
+        gen3.setJointValue("joint_4", this.J4value);
+        var textEntity = document.getElementById('J4value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J4value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J4value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseJ4();
+      }
+  
+      increaseJ5(){
+        this.J5value += 0.01;
+        console.log(this.J5value);
+        gen3.setJointValue("joint_5", this.J5value);
+        var textEntity = document.getElementById('J5value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J5value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J5value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJ5();
+  
+        if(this.J5value >= 2.3){
+          this.J5value = 2.3;
+        }
+      }
+  
+      increaseJ6(){
+        this.J6value += 0.01;
+        console.log(this.J6value);
+        gen3.setJointValue("joint_6", this.J6value);
+        var textEntity = document.getElementById('J6value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.J6value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.J6value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJ6();
+      }
+  
+      increaseJF(){
+        this.JFvalue += 0.01;
+        console.log(this.JFvalue);
+        gen3.setJointValue("finger_joint", this.JFvalue);
+        var textEntity = document.getElementById('JFvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JFvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JFvalue * (180/3.14)).toFixed(1));
+        }
+        this.future(5).increaseJF();
+  
+        if(this.JFvalue >= 1){
+          this.JFvalue = 1;
+        }
+      }
+  
+      increaseJLIK(){
+        this.JLIKvalue += 0.01;
+        console.log(this.JLIKvalue);
+        gen3.setJointValue("left_inner_knuckle_joint", this.JLIKvalue);
+        var textEntity = document.getElementById('JLIKvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JLIKvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JLIKvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJLIK();
+  
+        if(this.JLIKvalue >= 1){
+          this.JLIKvalue = 1;
+        }
+      }
+      increaseJLIF(){
+        this.JLIFvalue += 0.01;
+        console.log(this.JLIFvalue);
+        gen3.setJointValue("left_inner_finger_joint", this.JLIFvalue);
+        var textEntity = document.getElementById('JLIFvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JLIFvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JLIFvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJLIF();
+  
+        if(this.JLIFvalue >= 1){
+          this.JLIFvalue = 1;
+        }
+      }
+      increaseJRIK(){
+        this.JRIKvalue += 0.01;
+        console.log(this.JRIKvalue);
+        gen3.setJointValue("right_inner_knuckle_joint", this.JRIKvalue);
+        var textEntity = document.getElementById('JRIKvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JRIKvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JRIKvalue * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseJRIK();
+  
+        if(this.JRIKvalue >= 1){
+          this.JRIKvalue = 1;
+        }
+      }
+  
+      huskyButtonClick(){
+        //robot switching
+        husky.visible = true;
+        gen3.visible = false;
+  
+        //husky buttons z position
+        document.getElementById("frontRightWheelJointPanel").object3D.position.z = 0.11;
+        document.getElementById("frontLeftWheelJointPanel").object3D.position.z = 0.11;
+        document.getElementById("backRightWheelJointPanel").object3D.position.z = 0.11;
+        document.getElementById("backLeftWheelJointPanel").object3D.position.z = 0.11;
+        document.getElementById("JJoint1Panel").object3D.position.z = 0.11;
+        document.getElementById("JJoint2Panel").object3D.position.z = 0.11;
+        document.getElementById("JJoint3Panel").object3D.position.z = 0.11;
+        document.getElementById("JJoint4Panel").object3D.position.z = 0.11;
+        document.getElementById("JJoint5Panel").object3D.position.z = 0.11;
+        document.getElementById("JJoint6Panel").object3D.position.z = 0.11;
+        document.getElementById("JJFJoint1Panel").object3D.position.z = 0.11;
+        document.getElementById("JJFJoint2Panel").object3D.position.z = 0.11;
+        document.getElementById("JJFJoint3Panel").object3D.position.z = 0.11;
+        document.getElementById("JJFTJoint1Panel").object3D.position.z = 0.11;
+        document.getElementById("JJFTJoint2Panel").object3D.position.z = 0.11;
+        document.getElementById("JJFTJoint3Panel").object3D.position.z = 0.11;
+        document.getElementById("HHPanel").object3D.position.z = 0.11;
+  
+        //husky buttons visibility
+        document.getElementById("frontRightWheelJointPanel").object3D.visible = true;
+        document.getElementById("frontLeftWheelJointPanel").object3D.visible = true;
+        document.getElementById("backRightWheelJointPanel").object3D.visible = true;
+        document.getElementById("backLeftWheelJointPanel").object3D.visible = true;
+        document.getElementById("JJoint1Panel").object3D.visible = true;
+        document.getElementById("JJoint2Panel").object3D.visible = true;
+        document.getElementById("JJoint3Panel").object3D.visible = true;
+        document.getElementById("JJoint4Panel").object3D.visible = true;
+        document.getElementById("JJoint5Panel").object3D.visible = true;
+        document.getElementById("JJoint6Panel").object3D.visible = true;
+        document.getElementById("JJFJoint1Panel").object3D.visible = true;
+        document.getElementById("JJFJoint2Panel").object3D.visible = true;
+        document.getElementById("JJFJoint3Panel").object3D.visible = true;
+        document.getElementById("JJFTJoint1Panel").object3D.visible = true;
+        document.getElementById("JJFTJoint2Panel").object3D.visible = true;
+        document.getElementById("JJFTJoint3Panel").object3D.visible = true;
+        document.getElementById("HHPanel").object3D.visible = true;
+  
+        //gen3 buttons z position
+        document.getElementById("Joint1Panel").object3D.position.z = 0;
+        document.getElementById("Joint2Panel").object3D.position.z = 0;
+        document.getElementById("Joint3Panel").object3D.position.z = 0;
+        document.getElementById("Joint4Panel").object3D.position.z = 0;
+        document.getElementById("Joint5Panel").object3D.position.z = 0;
+        document.getElementById("Joint6Panel").object3D.position.z = 0;
+        document.getElementById("JointFPanel").object3D.position.z = 0;
+        document.getElementById("JointLIKPanel").object3D.position.z = 0;
+        document.getElementById("JointLIFPanel").object3D.position.z = 0;
+        document.getElementById("JointRIKPanel").object3D.position.z = 0;
+        document.getElementById("JointRIFPanel").object3D.position.z = 0;
+        document.getElementById("G3HPanel").object3D.position.z = 0;
+  
+        //gen3 buttons visibility
+        document.getElementById("Joint1Panel").object3D.visible = false;
+        document.getElementById("Joint2Panel").object3D.visible = false;
+        document.getElementById("Joint3Panel").object3D.visible = false;
+        document.getElementById("Joint4Panel").object3D.visible = false;
+        document.getElementById("Joint5Panel").object3D.visible = false;
+        document.getElementById("Joint6Panel").object3D.visible = false;
+        document.getElementById("JointFPanel").object3D.visible = false;
+        document.getElementById("JointLIKPanel").object3D.visible = false;
+        document.getElementById("JointLIFPanel").object3D.visible = false;
+        document.getElementById("JointRIKPanel").object3D.visible = false;
+        document.getElementById("JointRIFPanel").object3D.visible = false;
+        document.getElementById("G3HPanel").object3D.visible = false;
+      }
+   gen3ButtonClick(){
+        //robot visibilities
+        gen3.visible = true;
+        husky.visible = false;
+  
+        //husky button z positions
+        document.getElementById("frontRightWheelJointPanel").object3D.position.z = 0;
+        document.getElementById("frontLeftWheelJointPanel").object3D.position.z = 0;
+        document.getElementById("backRightWheelJointPanel").object3D.position.z = 0;
+        document.getElementById("backLeftWheelJointPanel").object3D.position.z = 0;
+        document.getElementById("JJoint1Panel").object3D.position.z = 0;
+        document.getElementById("JJoint2Panel").object3D.position.z = 0;
+        document.getElementById("JJoint3Panel").object3D.position.z = 0;
+        document.getElementById("JJoint4Panel").object3D.position.z = 0;
+        document.getElementById("JJoint5Panel").object3D.position.z = 0;
+        document.getElementById("JJoint6Panel").object3D.position.z = 0;
+        document.getElementById("JJFJoint1Panel").object3D.position.z = 0;
+        document.getElementById("JJFJoint2Panel").object3D.position.z = 0;
+        document.getElementById("JJFJoint3Panel").object3D.position.z = 0;
+        document.getElementById("JJFTJoint1Panel").object3D.position.z = 0;
+        document.getElementById("JJFTJoint2Panel").object3D.position.z = 0;
+        document.getElementById("JJFTJoint3Panel").object3D.position.z = 0;
+        document.getElementById("HHPanel").object3D.position.z = 0;
+  
+        //husky button visibilities
+        document.getElementById("frontRightWheelJointPanel").object3D.visible = false;
+        document.getElementById("frontLeftWheelJointPanel").object3D.visible = false;
+        document.getElementById("backRightWheelJointPanel").object3D.visible = false;
+        document.getElementById("backLeftWheelJointPanel").object3D.visible = false;
+        document.getElementById("JJoint1Panel").object3D.visible = false;
+        document.getElementById("JJoint2Panel").object3D.visible = false;
+        document.getElementById("JJoint3Panel").object3D.visible = false;
+        document.getElementById("JJoint4Panel").object3D.visible = false;
+        document.getElementById("JJoint5Panel").object3D.visible = false;
+        document.getElementById("JJoint6Panel").object3D.visible = false;
+        document.getElementById("JJFJoint1Panel").object3D.visible = false
+        document.getElementById("JJFJoint2Panel").object3D.visible = false;
+        document.getElementById("JJFJoint3Panel").object3D.visible = false;
+        document.getElementById("JJFTJoint1Panel").object3D.visible = false;
+        document.getElementById("JJFTJoint2Panel").object3D.visible = false;
+        document.getElementById("JJFTJoint3Panel").object3D.visible = false;
+        document.getElementById("HHPanel").object3D.visible = false;
+  
+        //gen3 button positioning
+        document.getElementById("Joint1Panel").object3D.position.z = 0.11;
+        document.getElementById("Joint2Panel").object3D.position.z = 0.11;
+        document.getElementById("Joint3Panel").object3D.position.z = 0.11;
+        document.getElementById("Joint4Panel").object3D.position.z = 0.11;
+        document.getElementById("Joint5Panel").object3D.position.z = 0.11;
+        document.getElementById("Joint6Panel").object3D.position.z = 0.11;
+        document.getElementById("JointFPanel").object3D.position.z = 0.11;
+        document.getElementById("JointLIKPanel").object3D.position.z = 0.11;
+        document.getElementById("JointLIFPanel").object3D.position.z = 0.11;
+        document.getElementById("JointRIKPanel").object3D.position.z = 0.11;
+        document.getElementById("JointRIFPanel").object3D.position.z = 0.11;
+        document.getElementById("G3HPanel").object3D.position.z = 0.11;
+  
+        //gen3 button visibility
+        document.getElementById("Joint1Panel").object3D.visible = true;
+        document.getElementById("Joint2Panel").object3D.visible = true;
+        document.getElementById("Joint3Panel").object3D.visible = true;
+        document.getElementById("Joint4Panel").object3D.visible = true;
+        document.getElementById("Joint5Panel").object3D.visible = true;
+        document.getElementById("Joint6Panel").object3D.visible = true;
+        document.getElementById("JointFPanel").object3D.visible = true;
+        document.getElementById("JointLIKPanel").object3D.visible = true;
+        document.getElementById("JointLIFPanel").object3D.visible = true;
+        document.getElementById("JointRIKPanel").object3D.visible = true;
+        document.getElementById("JointRIFPanel").object3D.visible = true;
+        document.getElementById("G3HPanel").object3D.visible = true;
+      }
+
+
+      decreaseJJFT3(){
+        this.JJFT3value -= 0.01;
+        console.log(this.JJFT3value);
+        husky.setJointValue("j2n6s300_joint_finger_tip_3", this.JJFT3value);
+        var textEntity = document.getElementById('JJFT3value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJFT3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJFT3value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJFT3();
+  
+        if(this.JJFT3value <= 0){
+          this.JJFT3value = 0;
+        }
+      }
+  
+      decreaseHH(){
+        husky.position.y -=0.01;
+        var textEntity = document.getElementById('HHvalue');
+        textEntity.setAttribute('text', 'value', husky.position.y.toFixed(1));
+        this.future(5).decreaseHH();
+      }
+        increaseFRW(){
+        this.FRWvalue += 0.01;
+        console.log(this.FRWvalue);
+        husky.setJointValue("front_right_wheel", this.FRWvalue);
+        var textEntity = document.getElementById('FRWvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.FRWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.FRWvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseFRW();
+      }
+  
+      increaseFLW(){
+        this.FLWvalue += 0.01;
+        console.log(this.FLWvalue);
+        husky.setJointValue("front_left_wheel", this.FLWvalue);
+        var textEntity = document.getElementById('FLWvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.FLWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.FLWvalue * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseFLW();
+      }
+  
+      increaseBRW(){
+        this.BRWvalue += 0.01;
+        console.log(this.BRWvalue);
+        husky.setJointValue("rear_right_wheel", this.BRWvalue);
+        var textEntity = document.getElementById('BRWvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.BRWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.BRWvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseBRW();
+      }
+  
+      increaseBLW(){
+        this.BLWvalue += 0.01;
+        console.log(this.BLWvalue);
+        husky.setJointValue("rear_left_wheel", this.BLWvalue);
+        var textEntity = document.getElementById('BLWvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.BLWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.BLWvalue * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseBLW();
+      }
+      increaseJJ1(){
+        this.JJ1value += 0.01;
+        console.log(this.JJ1value);
+        husky.setJointValue("j2n6s300_joint_1", this.JJ1value);
+        var textEntity = document.getElementById('JJ1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ1value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJJ1();
+      }
+  
+      increaseJJ2(){
+        this.JJ2value += 0.01;
+        console.log(this.JJ2value);
+        husky.setJointValue("j2n6s300_joint_2", this.JJ2value);
+        var textEntity = document.getElementById('JJ2value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ2value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJJ2();
+  
+        if(this.JJ2value >= 5.5){
+          this.JJ2value = 5.5;
+        }
+      }
+      increaseJJ3(){
+        this.JJ3value += 0.01;
+        console.log(this.JJ3value);
+        husky.setJointValue("j2n6s300_joint_3", this.JJ3value);
+        var textEntity = document.getElementById('JJ3value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ3value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJJ3();
+  
+        if(this.JJ3value >= 6){
+          this.JJ3value = 6;
+        }
+      }
+  
+      increaseJJ4(){
+        this.JJ4value += 0.01;
+        console.log(this.JJ4value);
+        husky.setJointValue("j2n6s300_joint_4", this.JJ4value);
+        var textEntity = document.getElementById('JJ4value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ4value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ4value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJJ4();
+      }
+      increaseJJ5(){
+        this.JJ5value += 0.01;
+        console.log(this.JJ5value);
+        husky.setJointValue("j2n6s300_joint_5", this.JJ5value);
+        var textEntity = document.getElementById('JJ5value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ5value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ5value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseJJ5();
+      }
+  
+      increaseJJ6(){
+        this.JJ6value += 0.01;
+        console.log(this.JJ6value);
+        husky.setJointValue("j2n6s300_joint_6", this.JJ6value);
+        var textEntity = document.getElementById('JJ6value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ6value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ6value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJJ6();
+      }
+  
+      increaseJJF1(){
+        this.JJF1value += 0.01;
+        console.log(this.JJF1value);
+        husky.setJointValue("j2n6s300_joint_finger_1", this.JJF1value);
+        var textEntity = document.getElementById('JJF1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJF1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJF1value*(180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJJF1();
+  
+        if(this.JJF1value >= 1.5){
+          this.JJF1value = 1.5;
+        }
+      }
+  
+      increaseJJF2(){
+        this.JJF2value += 0.01;
+        console.log(this.JJF2value);
+        husky.setJointValue("j2n6s300_joint_finger_2", this.JJF2value);
+        var textEntity = document.getElementById('JJF2value');
+        if(this.measurement === "raidans"){
+          textEntity.setAttribute('text', 'value', this.JJF2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJF2value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).increaseJJF2();
+  
+        if(this.JJF2value >= 1.5){
+          this.JJF2value = 1.5;
+        }
+      }
+  
+      increaseJJF3(){
+        this.JJF3value += 0.01;
+        console.log(this.JJF3value);
+        husky.setJointValue("j2n6s300_joint_finger_3", this.JJF3value);
+        var textEntity = document.getElementById('JJF3value');
+        if(this.measurement){
+          textEntity.setAttribute('text', 'value', this.JJF3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJF3value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseJJF3();
+  
+        if(this.JJF3value >= 1.5){
+          this.JJF3value = 1.5;
+        }
+      }
+  
+      increaseJJFT1(){
+        this.JJFT1value += 0.01;
+        console.log(this.JJFT1value);
+        husky.setJointValue("j2n6s300_joint_finger_tip_1", this.JJFT1value);
+        var textEntity = document.getElementById('JJFT1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJFT1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJFT1value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).increaseJJFT1();
+  
+        if(this.JJFT1value >= 2){
+          this.JJFT1value = 2;
+        }
+      }
+  
+      increaseJJFT2(){
+        this.JJFT2value += 0.01;
+        console.log(this.JJFT2value);
+        husky.setJointValue("j2n6s300_joint_finger_tip_2", this.JJFT2value);
+        var textEntity = document.getElementById('JJFT2value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJFT2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', this.JJFT2value * (180/3.14).toFixed(1));
+        }
+        
+        this.future(5).increaseJJFT2();
+  
+        if(this.JJFT2value >= 2){
+          this.JJFT2value = 2;
+        }
+      }
+  
+      increaseJJFT3(){
+        this.JJFT3value += 0.01;
+        console.log(this.JJFT3value);
+        husky.setJointValue("j2n6s300_joint_finger_tip_3", this.JJFT3value);
+        var textEntity = document.getElementById('JJFT3value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJFT3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJFT3value * (180/3.14)).toFixed(1));
+        }
+        this.future(5).increaseJJFT3();
+  
+        if(this.JJFT3value >= 2){
+          this.JJFT3value = 2;
+        }
+      }
+  
+      increaseHH(){
+        husky.position.y +=0.01;
+        var textEntity = document.getElementById('HHvalue');
+        textEntity.setAttribute('text', 'value', husky.position.y.toFixed(1));
+        this.future(5).increaseHH();
+      }
+  
+  
+      decreaseFRW(){
+        this.FRWvalue -= 0.01;
+        console.log(this.FRWvalue);
+        husky.setJointValue("front_right_wheel", this.FRWvalue);
+        var textEntity = document.getElementById('FRWvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.FRWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.FRWvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseFRW();
+      }
+  
+      decreaseFLW(){
+        this.FLWvalue -= 0.01;
+        console.log(this.FLWvalue);
+        husky.setJointValue("front_left_wheel", this.FLWvalue);
+        var textEntity = document.getElementById('FLWvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.FLWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.FLWvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseFLW();
+      }
+  
+      decreaseBRW(){
+        this.BRWvalue -= 0.01;
+        console.log(this.BRWvalue);
+        husky.setJointValue("rear_right_wheel", this.BRWvalue);
+        var textEntity = document.getElementById('BRWvalue');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.BRWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.BRWvalue * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseBRW();
+      }
+  
+      decreaseBLW(){
+        this.BLWvalue -= 0.01;
+        console.log(this.BLWvalue);
+        husky.setJointValue("rear_left_wheel", this.BLWvalue);
+        var textEntity = document.getElementById('BLWvalue')
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.BLWvalue.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.BLWvalue * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).decreaseBLW();
+      }
+  
+      decreaseJJ1(){
+        this.JJ1value -= 0.01;
+        console.log(this.JJ1value);
+        husky.setJointValue("j2n6s300_joint_1", this.JJ1value);
+        var textEntity = document.getElementById('JJ1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ1value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJ1();
+      }
+  
+      decreaseJJ2(){
+        this.JJ2value -= 0.01;
+        console.log(this.JJ2value);
+        husky.setJointValue("j2n6s300_joint_2", this.JJ2value);
+        var textEntity = document.getElementById('JJ2value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ2value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJ2();
+  
+        if(this.JJ2value <= 0){
+          this.JJ2value = 0;
+        }
+      }
+  
+      decreaseJJ3(){
+        this.JJ3value -= 0.01;
+        console.log(this.JJ3value);
+        husky.setJointValue("j2n6s300_joint_3", this.JJ3value);
+        var textEntity = document.getElementById('JJ3value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ3value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJ3();
+  
+        if(this.JJ3value <= 0){
+          this.JJ3value = 0;
+        }
+      }
+     decreaseJJ4(){
+        this.JJ4value -= 0.01;
+        console.log(this.JJ4value);
+        husky.setJointValue("j2n6s300_joint_4", this.JJ4value);
+        var textEntity = document.getElementById('JJ4value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ4value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ4value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJ4();
+      }
+      decreaseJJ5(){
+        this.JJ5value -= 0.01;
+        console.log(this.JJ5value);
+        husky.setJointValue("j2n6s300_joint_5", this.JJ5value);
+        var textEntity = document.getElementById('JJ5value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ5value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ5value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).decreaseJJ5();
+      }
+  
+      decreaseJJ6(){
+        this.JJ6value -= 0.01;
+        console.log(this.JJ6value);
+        husky.setJointValue("j2n6s300_joint_6", this.JJ6value);
+        var textEntity = document.getElementById('JJ6value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJ6value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJ6value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).decreaseJJ6();
+      }
+  
+      decreaseJJF1(){
+        this.JJF1value -= 0.01;
+        console.log(this.JJF1value);
+        husky.setJointValue("j2n6s300_joint_finger_1", this.JJF1value);
+        var textEntity = document.getElementById('JJF1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJF1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJF1value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).decreaseJJF1();
+  
+        if(this.JJF1value <= 0){
+          this.JJF1value = 0;
+        }
+      }
+  
+      decreaseJJF2(){
+        this.JJF2value -= 0.01;
+        console.log(this.JJF2value);
+        husky.setJointValue("j2n6s300_joint_finger_2", this.JJF2value);
+        var textEntity = document.getElementById('JJF2value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJF2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJF2value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJF2();
+  
+        if(this.JJF2value <= 0){
+          this.JJF2value = 0;
+        }
+      }
+  
+      decreaseJJF3(){
+        this.JJF3value -= 0.01;
+        console.log(this.JJF3value);
+        husky.setJointValue("j2n6s300_joint_finger_3", this.JJF3value);
+        var textEntity = document.getElementById('JJF3value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJF3value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJF3value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJF3();
+  
+        if(this.JJF3value <= 0){
+          this.JJF3value = 0;
+        }
+      }
+  
+      decreaseJJFT1(){
+        this.JJFT1value -= 0.01;
+        console.log(this.JJFT1value);
+        husky.setJointValue("j2n6s300_joint_finger_tip_1", this.JJFT1value);
+        var textEntity = document.getElementById('JJFT1value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJFT1value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJFT1value * (180/3.14)).toFixed(1));
+        }
+        
+        this.future(5).decreaseJJFT1();
+  
+        if(this.JJFT1value <= 0){
+          this.JJFT1value = 0;
+        }
+      }
+  
+      decreaseJJFT2(){
+        this.JJFT2value -= 0.01;
+        console.log(this.JJFT2value);
+        husky.setJointValue("j2n6s300_joint_finger_tip_2", this.JJFT2value);
+        var textEntity = document.getElementById('JJFT2value');
+        if(this.measurement === "radians"){
+          textEntity.setAttribute('text', 'value', this.JJFT2value.toFixed(1));
+        }else{
+          textEntity.setAttribute('text', 'value', (this.JJFT2value * (180/3.14)).toFixed(1));
+        }
+       
+        this.future(5).decreaseJJFT2();
+  
+        if(this.JJFT2value <= 0){
+          this.JJFT2value = 0;
+        }
+      }
+
+       mouseUp(){
+        this.cancelFuture(this.increaseFRW);
+        this.cancelFuture(this.decreaseFRW);
+        this.cancelFuture(this.increaseFLW);
+        this.cancelFuture(this.decreaseFLW);
+        this.cancelFuture(this.increaseBRW);
+        this.cancelFuture(this.decreaseBRW);
+        this.cancelFuture(this.increaseBLW);
+        this.cancelFuture(this.decreaseBLW);
+        this.cancelFuture(this.increaseJJ1);
+        this.cancelFuture(this.decreaseJJ1);
+        this.cancelFuture(this.increaseJJ2);
+        this.cancelFuture(this.decreaseJJ2);
+        this.cancelFuture(this.increaseJJ3);
+        this.cancelFuture(this.decreaseJJ3);
+        this.cancelFuture(this.increaseJJ4);
+        this.cancelFuture(this.decreaseJJ4);
+        this.cancelFuture(this.increaseJJ5);
+        this.cancelFuture(this.decreaseJJ5);
+        this.cancelFuture(this.increaseJJ6);
+        this.cancelFuture(this.decreaseJJ6);
+        this.cancelFuture(this.increaseJJF1);
+        this.cancelFuture(this.decreaseJJF1);
+        this.cancelFuture(this.increaseJJF2);
+        this.cancelFuture(this.decreaseJJF2);
+        this.cancelFuture(this.increaseJJF3);
+        this.cancelFuture(this.decreaseJJF3);
+        this.cancelFuture(this.increaseJJFT1);
+        this.cancelFuture(this.decreaseJJFT1);
+        this.cancelFuture(this.increaseJJFT2);
+        this.cancelFuture(this.decreaseJJFT2);
+        this.cancelFuture(this.increaseJJFT3);
+        this.cancelFuture(this.decreaseJJFT3);
+        this.cancelFuture(this.increaseHH);
+        this.cancelFuture(this.decreaseHH);
+        this.cancelFuture(this.increaseJ1);
+        this.cancelFuture(this.decreaseJ1);
+        this.cancelFuture(this.increaseJ2);
+        this.cancelFuture(this.decreaseJ2);
+        this.cancelFuture(this.increaseJ3);
+        this.cancelFuture(this.decreaseJ3);
+        this.cancelFuture(this.increaseJ4);
+        this.cancelFuture(this.decreaseJ4);
+        this.cancelFuture(this.increaseJ5);
+        this.cancelFuture(this.decreaseJ5);
+        this.cancelFuture(this.increaseJ6);
+        this.cancelFuture(this.decreaseJ6);
+        this.cancelFuture(this.increaseJF);
+        this.cancelFuture(this.decreaseJF);
+        this.cancelFuture(this.increaseJLIK);
+        this.cancelFuture(this.decreaseJLIK);
+        this.cancelFuture(this.increaseJLIF);
+        this.cancelFuture(this.decreaseJLIF);
+        this.cancelFuture(this.increaseJRIK);
+        this.cancelFuture(this.decreaseJRIK);
+        this.cancelFuture(this.increaseJRIF);
+        this.cancelFuture(this.decreaseJRIF);
+        this.cancelFuture(this.increaseG3H);
+        this.cancelFuture(this.decreaseG3H);
+      }
+
+Control Panel Values:
+
+ //husky values
+    this.FRWvalue = 0;
+    this.FLWvalue = 0;
+    this.BRWvalue = 0;
+    this.BLWvalue = 0;
+    this.JJ1value = 0;
+    this.JJ2value = 0;
+    this.JJ3value = 0;
+    this.JJ4value = 0;
+    this.JJ5value = 0;
+    this.JJ6value = 0;
+    this.JJF1value = 0;
+    this.JJF2value = 0;
+    this.JJF3value = 0;
+    this.JJFT1value = 0;
+    this.JJFT2value = 0;
+    this.JJFT3value = 0;
+
+    //gen3 values
+    this.J1value = 0;
+    this.J2value = 0;
+    this.J3value = 0;
+    this.J4value = 0;
+    this.J5value = 0;
+    this.J6value = 0;
+    this.JFvalue = 0;
+    this.JLIKvalue = 0;
+    this.JLIFvalue = 0;
+    this.JRIKvalue = 0;
+    this.JRIFvalue = 0;
+
+    this.count = 0;
+    this.Mcount = 0;
+    this.measurement = "radians";
+
+Control Panel Local function:
+AFRAME.registerComponent('decrease-click', {
+  init: function () {
+    // Initialize variables
+    this.isButtonPressed = {};
+    this.intervalId = {};
+
+    // Prevent mousedown event from propagating to the cursor
+    this.el.sceneEl.querySelector('#cursor').addEventListener('mousedown', function (event) {
+      event.stopPropagation();
+    });
+
+    // Add mousedown event listener to the button
+    this.el.addEventListener('mousedown', (event) => {
+      // Check if the button is the target of the event
+      if (event.target.classList.contains("clickable")) {
+        const buttonId = event.target.id;
+        
+        // Set flag to indicate button press
+        this.isButtonPressed[buttonId] = true;
+
+        // Start increasing the value repeatedly while the button is pressed
+        this.intervalId[buttonId] = setInterval(() => {
+          this.increaseValue(buttonId);
+        }, 5); // Adjust interval as needed
+      }
+    });
+
+    // Add mouseup event listener to the button
+    this.el.addEventListener('mouseup', (event) => {
+      // Check if the button is the target of the event
+      if (event.target.classList.contains("clickable")) {
+        const buttonId = event.target.id;
+        
+        // Reset flag to indicate button release
+        this.isButtonPressed[buttonId] = false;
+
+        // Stop increasing the value
+        clearInterval(this.intervalId[buttonId]);
+      }
+    });
+  },
+
+  increaseValue: function (buttonId) {
+    // Check if the button is still pressed
+    if (this.isButtonPressed[buttonId]) {
+      // Increase the value and update the text entity based on buttonId
+      switch (buttonId) {
+        case 'FRWdecreaseButton':
+        huskyFrontRightWheelValue -= 0.01;
+        console.log(huskyFrontRightWheelValue);
+        husky.setJointValue("front_right_wheel", huskyFrontRightWheelValue);
+        var textEntity = document.getElementById('FRWvalue');
+        textEntity.setAttribute('text', 'value', huskyFrontRightWheelValue.toFixed(1));
+        break;
+        case "FLWdecreaseButton": 
+        huskyFrontLeftWheelValue -= 0.01;
+        console.log(huskyFrontLeftWheelValue);
+        husky.setJointValue("front_left_wheel", huskyFrontLeftWheelValue);
+        var textEntity = document.getElementById('FLWvalue');
+        textEntity.setAttribute('text', 'value', huskyFrontLeftWheelValue.toFixed(1));
+        break;
+        case "BRWdecreaseButton": 
+        huskyBackRightWheelValue -= 0.01;
+        console.log(huskyBackRightWheelValue);
+        husky.setJointValue("rear_right_wheel", huskyBackRightWheelValue);
+        var textEntity = document.getElementById('BRWvalue');
+        textEntity.setAttribute('text', 'value', huskyBackRightWheelValue.toFixed(1));
+        break;
+        case "BLWdecreaseButton": 
+        huskyBackLeftWheelValue -= 0.01;
+        console.log(huskyBackLeftWheelValue);
+        husky.setJointValue("rear_left_wheel", huskyBackLeftWheelValue);
+        var textEntity = document.getElementById('BLWvalue');
+        textEntity.setAttribute('text', 'value', huskyBackLeftWheelValue.toFixed(1));
+        break;
+        case "JJ1decreaseButton":
+        j2n6s300Joint1Value-= 0.01;
+        husky.setJointValue("j2n6s300_joint_1", j2n6s300Joint1Value);
+        console.log(j2n6s300Joint1Value); 
+        var textEntity = document.getElementById('JJ1value');
+        textEntity.setAttribute('text', 'value', j2n6s300Joint1Value.toFixed(1));
+        break;
+        case "JJ2decreaseButton": 
+        j2n6s300Joint2Value-= 0.01;
+        husky.setJointValue("j2n6s300_joint_2", j2n6s300Joint2Value);
+        console.log(j2n6s300Joint2Value); 
+        var textEntity = document.getElementById('JJ2value');
+        textEntity.setAttribute('text', 'value', j2n6s300Joint2Value.toFixed(1));
+
+        if(j2n6s300Joint2Value >= 0){
+          j2n6s300Joint2Value = 0;
+        }
+        break;
+        case "JJ3decreaseButton": 
+        j2n6s300Joint3Value-= 0.01;
+        husky.setJointValue("j2n6s300_joint_3", j2n6s300Joint3Value);
+        console.log(j2n6s300Joint3Value); 
+        var textEntity = document.getElementById('JJ3value');
+        textEntity.setAttribute('text', 'value', j2n6s300Joint3Value.toFixed(1));
+
+        if(j2n6s300Joint3Value >= 0){
+          j2n6s300Joint3Value = 0;
+        }
+        break;
+        case "JJ4decreaseButton":
+          j2n6s300Joint4Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_4", j2n6s300Joint4Value);
+          console.log(j2n6s300Joint4Value);
+          var textEntity = document.getElementById('JJ4value');
+          textEntity.setAttribute('text', 'value', j2n6s300Joint4Value.toFixed(1));
+          break;
+        case "JJ5decreaseButton":
+          j2n6s300Joint5Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_5", j2n6s300Joint5Value);
+          console.log(j2n6s300Joint5Value);
+          var textEntity = document.getElementById('JJ5value');
+          textEntity.setAttribute('text', 'value', j2n6s300Joint5Value.toFixed(1));
+          break;
+        case "JJ6decreaseButton":
+          j2n6s300Joint6Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_6", j2n6s300Joint6Value);
+          console.log(j2n6s300Joint6Value);
+          var textEntity = document.getElementById('JJ6value');
+          textEntity.setAttribute('text', 'value', j2n6s300Joint6Value.toFixed(1));
+          break;
+        case "JJF1decreaseButton":
+          j2n6s300FingerJoint1Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_1", j2n6s300FingerJoint1Value);
+          console.log(j2n6s300FingerJoint1Value);
+          var textEntity = document.getElementById('JJF1value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerJoint1Value.toFixed(1));
+
+          if(j2n6s300FingerJoint1Value <= 0){
+            j2n6s300FingerJoint1Value = 0;
+          }
+          break;
+        case "JJF2decreaseButton":
+          j2n6s300FingerJoint2Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_2", j2n6s300FingerJoint2Value);
+          console.log(j2n6s300FingerJoint2Value);
+          var textEntity = document.getElementById('JJF2value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerJoint2Value.toFixed(1));
+
+          if(j2n6s300FingerJoint2Value <= 0){
+            j2n6s300FingerJoint2Value = 0;
+          }
+          break;
+        case "JJF3decreaseButton":
+          j2n6s300FingerJoint3Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_3", j2n6s300FingerJoint3Value);
+          console.log(j2n6s300FingerJoint3Value);
+          var textEntity = document.getElementById('JJF3value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerJoint3Value.toFixed(1));
+
+          if(j2n6s300FingerJoint3Value <= 0){
+            j2n6s300FingerJoint3Value = 0;
+          }
+          break;
+        case "JJFT1decreaseButton":
+          j2n6s300FingerTipJoint1Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_tip_1", j2n6s300FingerTipJoint1Value);
+          console.log(j2n6s300FingerTipJoint1Value);
+          var textEntity = document.getElementById('JJFT1value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerTipJoint1Value.toFixed(1));
+
+          if(j2n6s300FingerTipJoint1Value <= 0){
+            j2n6s300FingerTipJoint1Value = 0;
+          }
+          break;
+        case "JJFT2decreaseButton":
+          j2n6s300FingerTipJoint2Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_tip_2", j2n6s300FingerTipJoint2Value);
+          console.log(j2n6s300FingerTipJoint2Value);
+          var textEntity = document.getElementById('JJFT2value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerTipJoint2Value.toFixed(1));
+
+          if(j2n6s300FingerTipJoint2Value <= 0){
+            j2n6s300FingerTipJoint2Value = 0;
+          }
+          break;
+        case "JJFT3decreaseButton":
+          j2n6s300FingerTipJoint3Value-= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_tip_3", j2n6s300FingerTipJoint3Value);
+          console.log(j2n6s300FingerTipJoint3Value);
+          var textEntity = document.getElementById('JJFT3value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerTipJoint3Value.toFixed(1));
+
+          if(j2n6s300FingerTipJoint3Value <= 0){
+            j2n6s300FingerTipJoint3Value = 0;
+          }
+          break;
+        case "J1decreaseButton": 
+          joint1Value-= 0.01;
+          gen3.setJointValue("joint_1", joint1Value);
+          console.log(joint1Value);
+          var textEntity = document.getElementById('J1value');
+          textEntity.setAttribute('text', 'value', joint1Value.toFixed(1));
+          break;
+        case "J2decreaseButton": 
+          joint2Value-= 0.01;
+          gen3.setJointValue("joint_2", joint2Value);
+          console.log(joint2Value);
+          var textEntity = document.getElementById('J2value');
+          textEntity.setAttribute('text', 'value', joint2Value.toFixed(1));
+
+          if(joint2Value <= -2.5){
+            joint2Value = -2.5;
+          }
+          break;
+        case "J3decreaseButton": 
+          joint3Value-= 0.01;
+          gen3.setJointValue("joint_3", joint3Value);
+          console.log(joint3Value);
+          var textEntity = document.getElementById('J3value');
+          textEntity.setAttribute('text', 'value', joint3Value.toFixed(1));
+
+          if(joint3Value <= -2.7){
+            joint3Value = -2.7;
+          }
+          break;
+        case "J4decreaseButton": 
+          joint4Value-= 0.01;
+          gen3.setJointValue("joint_4", joint4Value);
+          console.log(joint4Value);
+          var textEntity = document.getElementById('J4value');
+          textEntity.setAttribute('text', 'value', joint4Value.toFixed(1));
+          break;
+        case "J5decreaseButton": 
+          joint5Value-= 0.01;
+          gen3.setJointValue("joint_5", joint5Value);
+          console.log(joint5Value);
+          var textEntity = document.getElementById('J5value');
+          textEntity.setAttribute('text', 'value', joint5Value.toFixed(1));
+
+          if(joint5Value <= -2.3){
+            joint5Value = -2.3;
+          }
+          break;
+        case "J6decreaseButton": 
+          joint6Value-= 0.01;
+          gen3.setJointValue("joint_6", joint6Value);
+          console.log(joint6Value);
+          var textEntity = document.getElementById('J6value');
+          textEntity.setAttribute('text', 'value', joint6Value.toFixed(1));
+          break;
+        case "JFdecreaseButton": 
+          fingerJointValue-= 0.01;
+          gen3.setJointValue("finger_joint", fingerJointValue);
+          console.log(fingerJointValue);
+          var textEntity = document.getElementById('JFvalue');
+          textEntity.setAttribute('text', 'value', fingerJointValue.toFixed(1));
+
+          if(fingerJointValue <= -1){
+            fingerJointValue = -1;
+          }
+          break;
+        case "JLIKdecreaseButton": 
+          jointLIKValue-= 0.01;
+          gen3.setJointValue("left_inner_knuckle_joint", jointLIKValue);
+          console.log(jointLIKValue);
+          var textEntity = document.getElementById('JLIKvalue');
+          textEntity.setAttribute('text', 'value', jointLIKValue.toFixed(1));
+          if(jointLIKValue <= 0){
+            jointLIKValue = 0;
+          }
+          break;
+        case "JLIFdecreaseButton": 
+          jointLIFValue-= 0.01;
+          gen3.setJointValue("left_inner_finger_joint", jointLIFValue);
+          console.log(jointLIFValue);
+          var textEntity = document.getElementById('JLIFvalue');
+          textEntity.setAttribute('text', 'value', jointLIFValue.toFixed(1));
+          if(jointLIFValue <= -1){
+            jointLIFValue = -1;
+          }
+          break;
+        case "JRIKdecreaseButton": 
+          jointRIKValue-= 0.01;
+          gen3.setJointValue("right_inner_knuckle_joint", jointRIKValue);
+          console.log(jointRIKValue);
+          var textEntity = document.getElementById('JRIKvalue');
+          textEntity.setAttribute('text', 'value', jointRIKValue.toFixed(1));
+          if(jointRIKValue <= 0){
+            jointRIKValue = 0;
+          }
+          break;
+        case "JRIFdecreaseButton": 
+          jointRIFValue-= 0.01;
+          gen3.setJointValue("right_inner_finger_joint", jointRIFValue);
+          console.log(jointRIFValue);
+          var textEntity = document.getElementById('JRIFvalue');
+          textEntity.setAttribute('text', 'value', jointRIFValue.toFixed(1));
+          if(jointRIFValue <= -1){
+            jointRIFValue = -1;
+          }
+          break;
+        case "G3HdecreaseButton": 
+          gen3.position.y -= 0.01;
+          var textEntity = document.getElementById('G3Hvalue');
+          textEntity.setAttribute('text', 'value', gen3.position.y.toFixed(1));
+          break;
+        case "HHdecreaseButton": 
+          husky.position.y -= 0.01;
+          var textEntity = document.getElementById('HHvalue');
+          textEntity.setAttribute('text', 'value', husky.position.y.toFixed(1));
+          break;
+      }
+    }
+  }
+});
+
+AFRAME.registerComponent('cursor-toggle-vr', {
+    init: function () {
+      var cursor = this.el;
+
+      // Listen for enter-vr event
+      this.el.sceneEl.addEventListener('enter-vr', function () {
+        // Hide cursor in VR
+        cursor.setAttribute('visible', false);
+      });
+
+      // Listen for exit-vr event
+      this.el.sceneEl.addEventListener('exit-vr', function () {
+        // Show cursor when exiting VR
+        cursor.setAttribute('visible', true);
+      });
+    }
+  });
+
+  AFRAME.registerComponent('custom-look-at', {
+        schema: {
+          target: { type: 'selector' }
+        },
+        tick: function () {
+          const targetEl = this.data.target;
+          if (!targetEl) { return; }
+
+          const targetPosition = new THREE.Vector3();
+          targetEl.object3D.getWorldPosition(targetPosition);
+
+          this.el.object3D.lookAt(targetPosition);
+        }
+      });
+ 
+      
+AFRAME.registerComponent('increase-click', {
+  init: function () {
+    // Initialize variables
+    this.isButtonPressed = {};
+    this.intervalId = {};
+
+    // Prevent mousedown event from propagating to the cursor
+    this.el.sceneEl.querySelector('#cursor').addEventListener('mousedown', function (event) {
+      event.stopPropagation();
+    });
+
+    // Add mousedown event listener to the button
+    this.el.addEventListener('mousedown', (event) => {
+      // Check if the button is the target of the event
+      if (event.target.classList.contains("clickable")) {
+        const buttonId = event.target.id;
+        
+        // Set flag to indicate button press
+        this.isButtonPressed[buttonId] = true;
+
+        // Start increasing the value repeatedly while the button is pressed
+        this.intervalId[buttonId] = setInterval(() => {
+          this.increaseValue(buttonId);
+        }, 5); // Adjust interval as needed
+      }
+    });
+
+    // Add mouseup event listener to the button
+    this.el.addEventListener('mouseup', (event) => {
+      // Check if the button is the target of the event
+      if (event.target.classList.contains("clickable")) {
+        const buttonId = event.target.id;
+        
+        // Reset flag to indicate button release
+        this.isButtonPressed[buttonId] = false;
+
+        // Stop increasing the value
+        clearInterval(this.intervalId[buttonId]);
+      }
+    });
+  },
+
+  increaseValue: function (buttonId) {
+    // Check if the button is still pressed
+    if (this.isButtonPressed[buttonId]) {
+      // Increase the value and update the text entity based on buttonId
+      switch (buttonId) {
+        case "FRWincreaseButton":
+        huskyFrontRightWheelValue += 0.01;
+        console.log(huskyFrontRightWheelValue);
+        husky.setJointValue("front_right_wheel", huskyFrontRightWheelValue);
+        var textEntity = document.getElementById('FRWvalue');
+        textEntity.setAttribute('text', 'value', huskyFrontRightWheelValue.toFixed(1));
+        break;
+        case "FLWincreaseButton":
+        huskyFrontLeftWheelValue += 0.01;
+        console.log(huskyFrontLeftWheelValue);
+        husky.setJointValue("front_left_wheel", huskyFrontLeftWheelValue);
+        var textEntity = document.getElementById('FLWvalue');
+        textEntity.setAttribute('text', 'value', huskyFrontLeftWheelValue.toFixed(1));
+        break;
+        case "BRWincreaseButton":
+        huskyBackRightWheelValue += 0.01;
+        console.log(huskyBackRightWheelValue);
+        husky.setJointValue("rear_right_wheel", huskyBackRightWheelValue);
+        var textEntity = document.getElementById('BRWvalue');
+        textEntity.setAttribute('text', 'value', huskyBackRightWheelValue.toFixed(1));
+        break;
+        case "BLWincreaseButton":
+        huskyBackLeftWheelValue += 0.01;
+        console.log(huskyBackLeftWheelValue);
+        husky.setJointValue("front_right_wheel", huskyBackLeftWheelValue);
+        var textEntity = document.getElementById('BLWvalue');
+        textEntity.setAttribute('text', 'value', huskyBackLeftWheelValue.toFixed(1));
+        break;
+        case "JJ1increaseButton":
+        j2n6s300Joint1Value+= 0.01;
+        husky.setJointValue("j2n6s300_joint_1", j2n6s300Joint1Value);
+        console.log(j2n6s300Joint1Value); 
+        var textEntity = document.getElementById('JJ1value');
+        textEntity.setAttribute('text', 'value', j2n6s300Joint1Value.toFixed(1));
+        break;
+        case "JJ2increaseButton":
+        j2n6s300Joint2Value+= 0.01;
+        husky.setJointValue("j2n6s300_joint_2", j2n6s300Joint2Value);
+        console.log(j2n6s300Joint2Value); 
+        var textEntity = document.getElementById('JJ2value');
+        textEntity.setAttribute('text', 'value', j2n6s300Joint2Value.toFixed(1));
+
+        if(j2n6s300Joint2Value >= 5.5){
+          j2n6s300Joint2Value = 5.5;
+        }
+        break;
+        case "JJ3increaseButton":
+        j2n6s300Joint3Value+= 0.01;
+        husky.setJointValue("j2n6s300_joint_3", j2n6s300Joint3Value);
+        console.log(j2n6s300Joint3Value); 
+        var textEntity = document.getElementById('JJ3value');
+        textEntity.setAttribute('text', 'value', j2n6s300Joint3Value.toFixed(1));
+
+        if(j2n6s300Joint3Value >= 6){
+          j2n6s300Joint3Value = 6;
+        }
+        break;
+        case "JJ4increaseButton":
+          j2n6s300Joint4Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_4", j2n6s300Joint4Value);
+          console.log(j2n6s300Joint4Value); 
+          var textEntity = document.getElementById('JJ4value');
+          textEntity.setAttribute('text', 'value', j2n6s300Joint4Value.toFixed(1));
+          break;
+        case "JJ5increaseButton":
+          j2n6s300Joint5Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_5", j2n6s300Joint5Value);
+          console.log(j2n6s300Joint5Value);
+          var textEntity = document.getElementById('JJ5value');
+          textEntity.setAttribute('text', 'value', j2n6s300Joint5Value.toFixed(1));
+          break;
+        case "JJ6increaseButton":
+          j2n6s300Joint6Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_6", j2n6s300Joint6Value);
+          console.log(j2n6s300Joint6Value);
+          var textEntity = document.getElementById('JJ6value');
+          textEntity.setAttribute('text', 'value', j2n6s300Joint6Value.toFixed(1));
+          break;
+        case "JJF1increaseButton":
+          j2n6s300FingerJoint1Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_1", j2n6s300FingerJoint1Value);
+          console.log(j2n6s300FingerJoint1Value);
+          var textEntity = document.getElementById('JJF1value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerJoint1Value.toFixed(1));
+
+          if(j2n6s300FingerJoint1Value >= 1.5){
+            j2n6s300FingerJoint1Value = 1.5;
+          }
+          break;
+        case "JJF2increaseButton":
+          j2n6s300FingerJoint2Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_2", j2n6s300FingerJoint2Value);
+          console.log(j2n6s300FingerJoint2Value);
+          var textEntity = document.getElementById('JJF2value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerJoint2Value.toFixed(1));
+
+          if(j2n6s300FingerJoint2Value >= 1.5){
+            j2n6s300FingerJoint2Value = 1.5;
+          }
+          break;
+        case "JJF3increaseButton":
+          j2n6s300FingerJoint3Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_3", j2n6s300FingerJoint3Value);
+          console.log(j2n6s300FingerJoint3Value);
+          var textEntity = document.getElementById('JJF3value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerJoint3Value.toFixed(1));
+
+          if(j2n6s300FingerJoint3Value >= 1.5){
+            j2n6s300FingerJoint3Value = 1.5;
+          }
+          break;
+        case "JJFT1increaseButton":
+          j2n6s300FingerTipJoint1Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_tip_1", j2n6s300FingerTipJoint1Value);
+          console.log(j2n6s300FingerTipJoint1Value);
+          var textEntity = document.getElementById('JJFT1value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerTipJoint1Value.toFixed(1));
+
+          if(j2n6s300FingerTipJoint1Value >= 2){
+            j2n6s300FingerTipJoint1Value = 2;
+          }
+          break;
+        case "JJFT2increaseButton":
+          j2n6s300FingerTipJoint2Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_tip_2", j2n6s300FingerTipJoint2Value);
+          console.log(j2n6s300FingerTipJoint2Value);
+          var textEntity = document.getElementById('JJFT2value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerTipJoint2Value.toFixed(1));
+
+          if(j2n6s300FingerTipJoint2Value >= 2){
+            j2n6s300FingerTipJoint2Value = 2;
+          }
+          break;
+         case "JJFT3increaseButton":
+          j2n6s300FingerTipJoint3Value+= 0.01;
+          husky.setJointValue("j2n6s300_joint_finger_tip_3", j2n6s300FingerTipJoint3Value);
+          console.log(j2n6s300FingerTipJoint3Value);
+          var textEntity = document.getElementById('JJFT3value');
+          textEntity.setAttribute('text', 'value', j2n6s300FingerTipJoint3Value.toFixed(1));
+
+          if(j2n6s300FingerTipJoint3Value >= 2){
+            j2n6s300FingerTipJoint3Value = 2;
+          }
+          break;
+        case "J1increaseButton": 
+          joint1Value+= 0.01;
+          gen3.setJointValue("joint_1", joint1Value);
+          console.log(joint1Value);
+          var textEntity = document.getElementById('J1value');
+          textEntity.setAttribute('text', 'value', joint1Value.toFixed(1));
+          break;
+        case "J2increaseButton": 
+          joint2Value+= 0.01;
+          gen3.setJointValue("joint_2", joint2Value);
+          console.log(joint2Value);
+          var textEntity = document.getElementById('J2value');
+          textEntity.setAttribute('text', 'value', joint2Value.toFixed(1));
+
+          if(joint2Value >= 2.5){
+            joint2Value = 2.5;
+          }
+          break;
+        case "J3increaseButton": 
+          joint3Value+= 0.01;
+          gen3.setJointValue("joint_3", joint3Value);
+          console.log(joint3Value);
+          var textEntity = document.getElementById('J3value');
+          textEntity.setAttribute('text', 'value', joint3Value.toFixed(1));
+
+          if(joint3Value >= 2.7){
+            joint3Value = 2.7;
+          }
+          break;
+        case "J4increaseButton": 
+          joint4Value+= 0.01;
+          gen3.setJointValue("joint_4", joint4Value);
+          console.log(joint4Value);
+          var textEntity = document.getElementById('J4value');
+          textEntity.setAttribute('text', 'value', joint4Value.toFixed(1));
+          break;
+        case "J5increaseButton": 
+          joint5Value+= 0.01;
+          gen3.setJointValue("joint_5", joint5Value);
+          console.log(joint5Value);
+          var textEntity = document.getElementById('J5value');
+          textEntity.setAttribute('text', 'value', joint5Value.toFixed(1));
+
+          if(joint5Value >= 2.3){
+            joint5Value = 2.3;
+          }
+          break;
+        case "J6increaseButton": 
+          joint6Value+= 0.01;
+          gen3.setJointValue("joint_6", joint6Value);
+          console.log(joint6Value);
+          var textEntity = document.getElementById('J6value');
+          textEntity.setAttribute('text', 'value', joint6Value.toFixed(1));
+          break;
+        case "JFincreaseButton": 
+          fingerJointValue+= 0.01;
+          gen3.setJointValue("finger_joint", fingerJointValue);
+          console.log(fingerJointValue);
+          var textEntity = document.getElementById('JFvalue');
+          textEntity.setAttribute('text', 'value', fingerJointValue.toFixed(1));
+
+          if(fingerJointValue >= 1){
+            fingerJointValue = 1;
+          }
+          break;
+        case "JLIKincreaseButton": 
+          jointLIKValue+= 0.01;
+          gen3.setJointValue("left_inner_knuckle_joint", jointLIKValue);
+          console.log(jointLIKValue);
+          var textEntity = document.getElementById('JLIKvalue');
+          textEntity.setAttribute('text', 'value', jointLIKValue.toFixed(1));
+          if(jointLIKValue >= 1){
+            jointLIKValue = 1;
+          }
+          break;
+        case "JLIFincreaseButton": 
+          jointLIFValue+= 0.01;
+          gen3.setJointValue("left_inner_finger_joint", jointLIFValue);
+          console.log(jointLIFValue);
+          var textEntity = document.getElementById('JLIFvalue');
+          textEntity.setAttribute('text', 'value', jointLIFValue.toFixed(1));
+          if(jointLIFValue >= 1){
+            jointLIFValue = 1;
+          }
+          break;
+        case "JRIKincreaseButton": 
+          jointRIKValue+= 0.01;
+          gen3.setJointValue("right_inner_knuckle_joint", jointRIKValue);
+          console.log(jointRIKValue);
+          var textEntity = document.getElementById('JRIKvalue');
+          textEntity.setAttribute('text', 'value', jointRIKValue.toFixed(1));
+          if(jointRIKValue >= 1){
+            jointRIKValue = 1;
+          }
+          break;
+        case "JRIFincreaseButton": 
+          jointRIFValue+= 0.01;
+          gen3.setJointValue("right_inner_finger_joint", jointRIFValue);
+          console.log(jointRIFValue);
+          var textEntity = document.getElementById('JRIFvalue');
+          textEntity.setAttribute('text', 'value', jointRIFValue.toFixed(1));
+          if(jointRIFValue >= 1){
+            jointRIFValue = 1;
+          }
+          break;
+        case "G3HincreaseButton": 
+          gen3.position.y += 0.01;
+          var textEntity = document.getElementById('G3Hvalue');
+          textEntity.setAttribute('text', 'value', gen3.position.y.toFixed(1));
+          break;
+        case "HHincreaseButton": 
+          husky.position.y += 0.01;
+          var textEntity = document.getElementById('HHvalue');
+          textEntity.setAttribute('text', 'value', husky.position.y.toFixed(1));
+          break;
+          
+      }
+    }
+  }
+});
+
+ AFRAME.registerComponent('husky-click', {
+        init: function () {
+          this.el.addEventListener('mousedown', () => {
+            husky.visible = true;
+            gen3.visible = false;
+
+            //set husky components to visible
+            document.getElementById("frontRightWheelJointPanel").object3D.visible = true;
+              document.getElementById("frontLeftWheelJointPanel").object3D.visible = true;
+              document.getElementById("backRightWheelJointPanel").object3D.visible = true;
+              document.getElementById("backLeftWheelJointPanel").object3D.visible = true;
+              document.getElementById("JJoint1Panel").object3D.visible = true;
+              document.getElementById("JJoint2Panel").object3D.visible = true;
+              document.getElementById("JJoint3Panel").object3D.visible = true;
+              document.getElementById("JJoint4Panel").object3D.visible = true;
+              document.getElementById("JJoint5Panel").object3D.visible = true;
+              document.getElementById("JJoint6Panel").object3D.visible = true;
+              document.getElementById("JJFJoint1Panel").object3D.visible = true;
+              document.getElementById("JJFJoint2Panel").object3D.visible = true;
+              document.getElementById("JJFJoint3Panel").object3D.visible = true;
+              document.getElementById("JJFTJoint1Panel").object3D.visible = true;
+              document.getElementById("JJFTJoint2Panel").object3D.visible = true;
+              document.getElementById("JJFTJoint3Panel").object3D.visible = true;
+              document.getElementById("HHPanel").object3D.visible = true;
+
+            //move husky components forward
+            document.getElementById("frontRightWheelJointPanel").object3D.position.z = 0.11;
+              document.getElementById("frontLeftWheelJointPanel").object3D.position.z = 0.11;
+              document.getElementById("backRightWheelJointPanel").object3D.position.z = 0.11;
+              document.getElementById("backLeftWheelJointPanel").object3D.position.z = 0.11;
+              document.getElementById("JJoint1Panel").object3D.position.z = 0.11;
+              document.getElementById("JJoint2Panel").object3D.position.z = 0.11;
+              document.getElementById("JJoint3Panel").object3D.position.z = 0.11;
+              document.getElementById("JJoint4Panel").object3D.position.z = 0.11;
+              document.getElementById("JJoint5Panel").object3D.position.z = 0.11;
+              document.getElementById("JJoint6Panel").object3D.position.z = 0.11;
+              document.getElementById("JJFJoint1Panel").object3D.position.z = 0.11;
+              document.getElementById("JJFJoint2Panel").object3D.position.z = 0.11;
+              document.getElementById("JJFJoint3Panel").object3D.position.z = 0.11;
+              document.getElementById("JJFTJoint1Panel").object3D.position.z = 0.11;
+              document.getElementById("JJFTJoint2Panel").object3D.position.z = 0.11;
+              document.getElementById("JJFTJoint3Panel").object3D.position.z = 0.11;
+              document.getElementById("HHPanel").object3D.position.z = 0.11;
+
+          //set gen3 components to invisible
+          document.getElementById("Joint1Panel").object3D.visible = false;
+          document.getElementById("Joint2Panel").object3D.visible = false;
+          document.getElementById("Joint3Panel").object3D.visible = false;
+          document.getElementById("Joint4Panel").object3D.visible = false;
+          document.getElementById("Joint5Panel").object3D.visible = false;
+          document.getElementById("Joint6Panel").object3D.visible = false;
+          document.getElementById("JointFPanel").object3D.visible = false;
+          document.getElementById("JointLIKPanel").object3D.visible = false;
+          document.getElementById("JointLIFPanel").object3D.visible = false;
+          document.getElementById("JointRIKPanel").object3D.visible = false;
+          document.getElementById("JointRIFPanel").object3D.visible = false;
+          document.getElementById("G3HPanel").object3D.visible = false;
+          
+
+          //move gen3 controls backwards
+          document.getElementById("Joint1Panel").object3D.position.z = 0;
+              document.getElementById("Joint2Panel").object3D.position.z = 0;
+              document.getElementById("Joint3Panel").object3D.position.z = 0;
+              document.getElementById("Joint4Panel").object3D.position.z = 0;
+              document.getElementById("Joint5Panel").object3D.position.z = 0;
+              document.getElementById("Joint6Panel").object3D.position.z = 0;
+              document.getElementById("JointFPanel").object3D.position.z = 0;
+              document.getElementById("JointLIKPanel").object3D.position.z = 0;
+              document.getElementById("JointLIFPanel").object3D.position.z = 0;
+              document.getElementById("JointRIKPanel").object3D.position.z = 0;
+              document.getElementById("JointRIFPanel").object3D.position.z = 0;
+              document.getElementById("G3HPanel").object3D.position.z = 0;
+          });
+        }
+      });
+
+      AFRAME.registerComponent('gen3-click', {
+        init: function () {
+
+          this.el.sceneEl.querySelector('#cursor').addEventListener('mousedown', function (event) {
+            // Stop the propagation of the event
+            event.stopPropagation();
+        });
+          this.el.addEventListener('mousedown', (event) => {
+            if(event.target.id === "gen3Button"){
+              gen3.visible = true;
+              husky.visible = false;
+
+              //make husky controls invisible
+              document.getElementById("frontRightWheelJointPanel").object3D.visible = false;
+              document.getElementById("frontLeftWheelJointPanel").object3D.visible = false;
+              document.getElementById("backRightWheelJointPanel").object3D.visible = false;
+              document.getElementById("backLeftWheelJointPanel").object3D.visible = false;
+              document.getElementById("JJoint1Panel").object3D.visible = false;
+              document.getElementById("JJoint2Panel").object3D.visible = false;
+              document.getElementById("JJoint3Panel").object3D.visible = false;
+              document.getElementById("JJoint4Panel").object3D.visible = false;
+              document.getElementById("JJoint5Panel").object3D.visible = false;
+              document.getElementById("JJoint6Panel").object3D.visible = false;
+              document.getElementById("JJFJoint1Panel").object3D.visible = false;
+              document.getElementById("JJFJoint2Panel").object3D.visible = false;
+              document.getElementById("JJFJoint3Panel").object3D.visible = false;
+              document.getElementById("JJFTJoint1Panel").object3D.visible = false;
+              document.getElementById("JJFTJoint2Panel").object3D.visible = false;
+              document.getElementById("JJFTJoint3Panel").object3D.visible = false;
+              document.getElementById("HHPanel").object3D.visible = false;
+
+              //move husky elements backwards
+              document.getElementById("frontRightWheelJointPanel").object3D.position.z = 0;
+              document.getElementById("frontLeftWheelJointPanel").object3D.position.z = 0;
+              document.getElementById("backRightWheelJointPanel").object3D.position.z = 0;
+              document.getElementById("backLeftWheelJointPanel").object3D.position.z = 0;
+              document.getElementById("JJoint1Panel").object3D.position.z = 0;
+              document.getElementById("JJoint2Panel").object3D.position.z = 0;
+              document.getElementById("JJoint3Panel").object3D.position.z = 0;
+              document.getElementById("JJoint4Panel").object3D.position.z = 0;
+              document.getElementById("JJoint5Panel").object3D.position.z = 0;
+              document.getElementById("JJoint6Panel").object3D.position.z = 0;
+              document.getElementById("JJFJoint1Panel").object3D.position.z = 0;
+              document.getElementById("JJFJoint2Panel").object3D.position.z = 0;
+              document.getElementById("JJFJoint3Panel").object3D.position.z = 0;
+              document.getElementById("JJFTJoint1Panel").object3D.position.z = 0;
+              document.getElementById("JJFTJoint2Panel").object3D.position.z = 0;
+              document.getElementById("JJFTJoint3Panel").object3D.position.z = 0;
+              document.getElementById("HHPanel").object3D.position.z = 0;
+
+              //make gen3 controls visible
+              document.getElementById("Joint1Panel").object3D.visible = true;
+              document.getElementById("Joint2Panel").object3D.visible = true;
+              document.getElementById("Joint3Panel").object3D.visible = true;
+              document.getElementById("Joint4Panel").object3D.visible = true;
+              document.getElementById("Joint5Panel").object3D.visible = true;
+              document.getElementById("Joint6Panel").object3D.visible = true;
+              document.getElementById("JointFPanel").object3D.visible = true;
+              document.getElementById("JointLIKPanel").object3D.visible = true;
+              document.getElementById("JointLIFPanel").object3D.visible = true;
+              document.getElementById("JointRIKPanel").object3D.visible = true;
+              document.getElementById("JointRIFPanel").object3D.visible = true;
+              document.getElementById("G3HPanel").object3D.visible = true;
+
+              //move gen3 controls forward
+              document.getElementById("Joint1Panel").object3D.position.z = 0.11;
+              document.getElementById("Joint2Panel").object3D.position.z = 0.11;
+              document.getElementById("Joint3Panel").object3D.position.z = 0.11;
+              document.getElementById("Joint4Panel").object3D.position.z = 0.11;
+              document.getElementById("Joint5Panel").object3D.position.z = 0.11;
+              document.getElementById("Joint6Panel").object3D.position.z = 0.11;
+              document.getElementById("JointFPanel").object3D.position.z = 0.11;
+              document.getElementById("JointLIKPanel").object3D.position.z = 0.11;
+              document.getElementById("JointLIFPanel").object3D.position.z = 0.11;
+              document.getElementById("JointRIKPanel").object3D.position.z = 0.11;
+              document.getElementById("JointRIFPanel").object3D.position.z = 0.11;
+              document.getElementById("G3HPanel").object3D.position.z = 0.11;
+            }
+            
+          });
+        }
+      });

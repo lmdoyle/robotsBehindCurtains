@@ -1,0 +1,34 @@
+{
+  "name": "aframe-hello-world",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "npx parcel index.html",
+    "build": "npx parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stephen Buchanan",
+  "license": "ISC",
+  "dependencies": {
+    "aframe": "^0.7.1",
+    "expr-eval": "^2.0.2"
+  },
+  "keywords": [
+    "javascript",
+    "xacro",
+    "xml",
+    "macro",
+    "robotics",
+    "ros",
+    "urdf",
+    "urdf-models",
+    "parser",
+    "robot-operating-system"
+  ],
+  
+  "devDependencies": {
+    "parcel-bundler": "^1.4.1"
+  }
+}
