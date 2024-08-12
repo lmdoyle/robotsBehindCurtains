@@ -114,7 +114,21 @@ console.log("fully loaded");
       );
 
       
-      
+      AFRAME.registerComponent('custom-look-at', {
+        schema: {
+          target: { type: 'selector' }
+        },
+        tick: function () {
+          const targetEl = this.data.target;
+          if (!targetEl) { return; }
+
+          const targetPosition = new THREE.Vector3();
+          targetEl.object3D.getWorldPosition(targetPosition);
+
+          this.el.object3D.lookAt(targetPosition);
+        }
+      });
+ 
 
 
         
@@ -573,14 +587,14 @@ document.addEventListener('keydown', function(event) {
     </template>
 
     <a-entity id="playerObject" pos = "0 3 0" gltf-model="#hand"></a-entity>
-    <a-entity id="pcObject" position = "1 0 -7" gltf-model="#hand"></a-entity>
+    <a-entity id="pcObject" position = "-1 0.5 -7" gltf-model="#hand"></a-entity>
 
     <a-box id="rotatingCube" position=".12 3 5.96" scale="1 2 1"></a-box>
 
     <a-plane id="ocolusControls" position="4.5 3 0" custom-look-at="target: #rotatingCube" scale=" 3 3 3" src="./Assets/oculusControls3.png">
     <a-plane id="robotControls" position="-6.5 0 1" custom-look-at="target: #rotatingCube" scale=" 3 3 3" src="./Assets/robotPositions.png"></a-plane>
     <a-plane id="keyboardControls" position="-4 0 1" custom-look-at="target: #playerBox" scale=" 2 2 2" src="./Assets/keyboardControls.png"></a-plane>
-     
+      
     </a-plane>
      
     <a-entity id="cameraRig" position="-3.68 1.6 -6.60" rotation=" 0 180 0">
@@ -594,7 +608,7 @@ document.addEventListener('keydown', function(event) {
       <a-entity id="rightHand" oculus-touch-controls="hand: right" hand-tracking-controls="hand: right" laser-controls="hand: right" raycaster="objects: .clickable; far: 30" line="color: red; opacity: 0.75" visible="true"></a-entity>
   </a-entity>
 
-  <a-box id="playerBox" position="-4 0 -12" rotation=" 0 180 0"></a-box>
+  <a-box id="playerBox" position="-4 0 -12" rotation=" 0 180 0" material="opacity: 0.0; transparent: true"></a-box>
 
       
 
