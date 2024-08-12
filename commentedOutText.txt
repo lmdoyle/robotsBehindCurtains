@@ -3010,21 +3010,7 @@ AFRAME.registerComponent('cursor-toggle-vr', {
     }
   });
 
-  AFRAME.registerComponent('custom-look-at', {
-        schema: {
-          target: { type: 'selector' }
-        },
-        tick: function () {
-          const targetEl = this.data.target;
-          if (!targetEl) { return; }
-
-          const targetPosition = new THREE.Vector3();
-          targetEl.object3D.getWorldPosition(targetPosition);
-
-          this.el.object3D.lookAt(targetPosition);
-        }
-      });
- 
+  
       
 AFRAME.registerComponent('increase-click', {
   init: function () {
